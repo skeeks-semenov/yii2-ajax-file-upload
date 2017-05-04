@@ -10,19 +10,20 @@ namespace skeeks\yii2\ajaxfileupload\widgets;
 use dosamigos\fileupload\FileUpload;
 use dosamigos\fileupload\FileUploadAsset;
 use dosamigos\fileupload\FileUploadPlusAsset;
+use skeeks\imagine\Image;
 use skeeks\yii2\ajaxfileupload\AjaxFileUploadModule;
 use skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadWidgetAsset;
 use skeeks\yii2\models\CmsStorageFile;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
+use yii\helpers\FileHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\widgets\InputWidget;
 
 /**
- * @property CmsStorageFile $cmsFile
  * @property AjaxFileUploadDefaultTool|AjaxFileUploadTool $defaultTool
  *
  * Class AjaxFileUploadWidget
@@ -84,62 +85,7 @@ class AjaxFileUploadWidget extends InputWidget
             'success' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Success'),
         ];
 
-        if ($this->multiple)
-        {
-            if ($this->cmsFiles)
-            {
-                foreach ($this->cmsFiles as $file)
-                {
-                    $fileData = [
-                        'name' => $file->fileName,
-                        'value' => $file->id,
-                        'state' => 'success',
-                        'size' => $file->size,
-                        'type' => $file->mime_type,
-                        'src' => $file->src,
-                    ];
-
-                    if ($file->isImage())
-                    {
-                        $fileData['image'] = [
-                            'height' => $file->image_height,
-                            'width' => $file->image_width,
-                        ];
-                        $fileData['preview'] = Html::img($file->src);
-                    }
-
-                    $this->clientOptions['files'][] = $fileData;
-                }
-
-
-            }
-
-        } else
-        {
-            if ($this->cmsFile)
-            {
-                $fileData = [
-                    'name' => $this->cmsFile->fileName,
-                    'value' => $this->cmsFile->id,
-                    'state' => 'success',
-                    'size' => $this->cmsFile->size,
-                    'type' => $this->cmsFile->mime_type,
-                    'src' => $this->cmsFile->src,
-                ];
-                if ($this->cmsFile->isImage())
-                {
-                    $fileData['image'] = [
-                        'height' => $this->cmsFile->image_height,
-                        'width' => $this->cmsFile->image_width,
-                    ];
-
-                    $fileData['preview'] = Html::img($this->cmsFile->src);
-                }
-                $this->clientOptions['files'][] = $fileData;
-            }
-
-        }
-
+        $this->_initClientFiles();
 
         $tools = [];
 
@@ -157,8 +103,45 @@ class AjaxFileUploadWidget extends InputWidget
         {
             throw new InvalidConfigException('Not configurated file upload tools');
         }
+    }
 
 
+    protected function _initClientFiles()
+    {
+        if ($this->multiple)
+        {
+
+        } else
+        {
+            if ($value = $this->model->{$this->attribute})
+            {
+                $name = pathinfo($value, PATHINFO_BASENAME);
+                $mimeType = FileHelper::getMimeType($value, null, false);
+                $size = filesize($value);
+                $fileData = [
+                    'name'  => $name,
+                    'value' => $value,
+                    'state' => 'success',
+                    'size'  => $size,
+                    'sizeFormated'  => \Yii::$app->formatter->asShortSize($size),
+                    'type'  => $mimeType,
+                    'src'   => $value,
+                ];
+
+                $type = $mimeType ? explode("/", $mimeType)[0] : "";
+
+                if ($type == 'image')
+                {
+                    $image = Image::getImagine()->open($value);
+                    $fileData['image'] = [
+                        'height' => $image->getSize()->getHeight(),
+                        'width' => $image->getSize()->getWidth(),
+                    ];
+                }
+
+                $this->clientOptions['files'][] = $fileData;
+            }
+        }
     }
 
     /**
@@ -190,32 +173,6 @@ class AjaxFileUploadWidget extends InputWidget
         echo $this->render($this->view_file, [
             'element'         => $element,
         ]);
-    }
-
-    /**
-     * @return null|CmsStorageFile
-     */
-    public function getCmsFile()
-    {
-        if ($fileId = $this->model->{$this->attribute})
-        {
-            return CmsStorageFile::findOne((int) $fileId);
-        }
-
-        return null;
-    }
-
-    /**
-     * @return null|CmsStorageFile[]
-     */
-    public function getCmsFiles()
-    {
-        if ($fileId = $this->model->{$this->attribute})
-        {
-            return CmsStorageFile::find()->where(['id' => $fileId])->all();
-        }
-
-        return null;
     }
 
     /**

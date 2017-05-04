@@ -36,6 +36,8 @@
     {
         white-space: nowrap;
         padding-top: 5px;
+        font-size: 12px;
+        font-weight: bold;
     }
 
 .sx-file:hover .sx-controlls
@@ -64,6 +66,7 @@
         .sx-file .thumbnail .sx-result
         {
             height: 32px;
+            font-size: 12px;
         }
 
 .sx-state-process .sx-result
