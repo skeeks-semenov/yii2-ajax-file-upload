@@ -1,0 +1,30 @@
+{
+	"name": "skeeks/yii2-file-upload",
+	"description": "Yii2 files upload",
+	"keywords": ["yii", "skeeks", "framework", "component"],
+  	"homepage": "https://cms.skeeks.com/",
+	"type": "yii2-extension",
+	"license": "GPL-3.0+",
+	"support": {
+        "issues": "https://skeeks.com/",
+        "wiki": "https://cms.skeeks.com/docs",
+        "source": "https://github.com/skeeks-semenov/yii2-file-upload"
+    },
+	"authors": [
+		{
+			"name": "Semenov Alexander",
+			"email": "semenov@skeeks.com"
+		}
+	],
+	"require": {
+		"yiisoft/yii2": "*",
+		"skeeks/yii2-sx": "*",
+		"2amigos/yii2-file-upload-widget": "*",
+		"yiisoft/yii2-httpclient": "*"
+	},
+    "autoload": {
+        "psr-4": {
+            "skeeks\\yii2\\fileupload\\": "src/"
+        }
+    }
+}
