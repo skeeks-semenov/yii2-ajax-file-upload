@@ -31,10 +31,20 @@ Configuration app
 
 ```php
 
-'components' =>
+'modules' => 
 [
-
-];
+    'ajaxfileupload' => [
+        'class'         => '\skeeks\yii2\ajaxfileupload\AjaxFileUploadModule',
+    
+        'controllerMap' => [
+            'upload' => [
+                'class' => '\skeeks\yii2\ajaxfileupload\controllers\UploadController',
+                'local_root_tmp_dir'    => '@public-data/temp',
+                'local_public_tmp_dir'  => 'public-data/temp'
+            ]
+        ]
+    ]
+]
 
 ```
 

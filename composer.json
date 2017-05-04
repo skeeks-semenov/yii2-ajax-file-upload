@@ -19,6 +19,7 @@
 	"require": {
 		"yiisoft/yii2": "*",
 		"skeeks/yii2-sx": "*",
+		"skeeks/yii2-imagine": "*",
 		"2amigos/yii2-file-upload-widget": "*",
 		"yiisoft/yii2-httpclient": "*"
 	},

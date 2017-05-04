@@ -30,7 +30,7 @@ class AjaxFileUploadModule extends \yii\base\Module
             \Yii::$app->i18n->translations['skeeks/yii2-ajaxfileupload'] = [
                 'class' => 'yii\i18n\PhpMessageSource',
                 'sourceLanguage' => 'en',
-                'basePath' => '@skeeks/yii2/fileupload/messages',
+                'basePath' => '@skeeks/yii2/ajaxfileupload/messages',
                 'fileMap' => [
                     'skeeks/yii2-ajaxfileupload' => 'main.php',
                 ],

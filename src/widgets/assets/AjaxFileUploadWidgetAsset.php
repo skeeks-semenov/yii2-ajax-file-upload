@@ -9,8 +9,7 @@ namespace skeeks\yii2\ajaxfileupload\widgets\assets;
 use dosamigos\fileupload\FileUpload;
 use dosamigos\fileupload\FileUploadAsset;
 use dosamigos\fileupload\FileUploadPlusAsset;
-use skeeks\yii2\base\AssetBundle;
-use skeeks\yii2\models\CmsStorageFile;
+use \yii\web\AssetBundle;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -22,7 +21,7 @@ use yii\helpers\Json;
  */
 class AjaxFileUploadWidgetAsset extends AssetBundle
 {
-    public $sourcePath = '@skeeks/cms/fileupload/widgets/assets/src';
+    public $sourcePath = '@skeeks/yii2/ajaxfileupload/widgets/assets/src';
 
     public $css = [
         'css/ajax-file-upload.css'
@@ -39,4 +38,14 @@ class AjaxFileUploadWidgetAsset extends AssetBundle
         'yii\web\YiiAsset',
         'skeeks\sx\assets\Core',
     ];
+
+    /**
+     * @param string $asset
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
+    static public function getAssetUrl($asset)
+    {
+        return \Yii::$app->assetManager->getAssetUrl(\Yii::$app->assetManager->getBundle(static::className()), $asset);
+    }
 }

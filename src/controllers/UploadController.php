@@ -8,19 +8,10 @@
 
 namespace skeeks\yii2\ajaxfileupload\controllers;
 
-use common\models\User;
-use skeeks\yii2\actions\LogoutAction;
-use skeeks\yii2\helpers\RequestResponse;
-use skeeks\yii2\helpers\StringHelper;
+use skeeks\sx\helpers\ResponseHelper;
 use skeeks\yii2\vkDatabase\models\VkCity;
 use skeeks\imagine\Image;
-use skeeks\sx\File;
 use Yii;
-use skeeks\module\cms\user\model\LoginForm;
-use skeeks\module\cms\user\model\PasswordResetRequestForm;
-use skeeks\module\cms\user\model\ResetPasswordForm;
-use skeeks\module\cms\user\model\SignupForm;
-use frontend\models\ContactForm;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\filters\ContentNegotiator;
@@ -43,18 +34,23 @@ use yii\web\UploadedFile;
  */
 class UploadController extends Controller
 {
-    public $defaultAction = 'upload';
+    public $defaultAction           = 'upload';
 
-    public $local_root_tmp_dir = '@frontend/web/assets/temp';
-    public $local_public_tmp_dir = '/assets/temp';
+    public $local_root_tmp_dir      = '@frontend/web/assets/temp';
+    public $local_public_tmp_dir    = '/assets/temp';
+
+    public function init()
+    {
+        parent::init();
+    }
+
     /**
-     * @return RequestResponse
-     * @throws Exception
+     * @return ResponseHelper
      */
     public function actionUpload()
     {
         //sleep(5);
-        $rr = new RequestResponse();
+        $rr = new ResponseHelper();
         try
         {
             $file = UploadedFile::getInstanceByName(\Yii::$app->request->post('formName'));
