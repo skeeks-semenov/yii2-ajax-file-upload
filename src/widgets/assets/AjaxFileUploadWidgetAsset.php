@@ -5,7 +5,7 @@
  * @copyright (c) 2010 SkeekS
  * @date 27.04.2017
  */
-namespace skeeks\yii2\fileupload\widgets\assets;
+namespace skeeks\yii2\ajaxfileupload\widgets\assets;
 use dosamigos\fileupload\FileUpload;
 use dosamigos\fileupload\FileUploadAsset;
 use dosamigos\fileupload\FileUploadPlusAsset;
@@ -18,7 +18,7 @@ use yii\helpers\Json;
 /**
  * Class AjaxFileUploadWidgetAsset
  *
- * @package skeeks\yii2\fileupload\widgets\assets
+ * @package skeeks\yii2\ajaxfileupload\widgets\assets
  */
 class AjaxFileUploadWidgetAsset extends AssetBundle
 {

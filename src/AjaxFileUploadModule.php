@@ -5,15 +5,15 @@
  * @copyright (c) 2010 SkeekS
  * @date 26.04.2017
  */
-namespace skeeks\yii2\fileupload;
+namespace skeeks\yii2\ajaxfileupload;
 /**
  * Class FileUploadModule
  *
- * @package skeeks\yii2\fileupload
+ * @package skeeks\yii2\ajaxfileupload
  */
-class FileUploadModule extends \yii\base\Module
+class AjaxFileUploadModule extends \yii\base\Module
 {
-    public $controllerNamespace = 'skeeks\yii2\fileupload\controllers';
+    public $controllerNamespace = 'skeeks\yii2\ajaxfileupload\controllers';
 
     public function init()
     {
@@ -27,12 +27,12 @@ class FileUploadModule extends \yii\base\Module
     {
         if (self::$isRegisteredTranslations === false)
         {
-            \Yii::$app->i18n->translations['skeeks/yii2-fileupload'] = [
+            \Yii::$app->i18n->translations['skeeks/yii2-ajaxfileupload'] = [
                 'class' => 'yii\i18n\PhpMessageSource',
                 'sourceLanguage' => 'en',
                 'basePath' => '@skeeks/yii2/fileupload/messages',
                 'fileMap' => [
-                    'skeeks/yii2-fileupload' => 'main.php',
+                    'skeeks/yii2-ajaxfileupload' => 'main.php',
                 ],
                 //'on missingTranslation' => \Yii::$app->i18n->missingTranslationHandler
             ];

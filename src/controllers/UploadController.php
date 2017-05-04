@@ -6,7 +6,7 @@
  * @date 29.04.2017
  */
 
-namespace skeeks\yii2\fileupload\controllers;
+namespace skeeks\yii2\ajaxfileupload\controllers;
 
 use common\models\User;
 use skeeks\yii2\actions\LogoutAction;
@@ -39,7 +39,7 @@ use yii\web\UploadedFile;
 /**
  * Class UploadController
  *
- * @package skeeks\yii2\fileupload\controllers
+ * @package skeeks\yii2\ajaxfileupload\controllers
  */
 class UploadController extends Controller
 {
@@ -102,7 +102,7 @@ class UploadController extends Controller
                     ->send();
 
                 if (!$response->isOk) {
-                    throw new Exception( \Yii::t('skeeks/yii2-fileupload', 'File not available for download') );
+                    throw new Exception( \Yii::t('skeeks/yii2-ajaxfileupload', 'File not available for download') );
                 }
 
                 $clearLink = $link;
@@ -115,7 +115,7 @@ class UploadController extends Controller
 
                 if (!extension_loaded('fileinfo'))
                 {
-                    throw new Exception( \Yii::t('skeeks/yii2-fileupload', 'PHP fileinfo is not installed') );
+                    throw new Exception( \Yii::t('skeeks/yii2-ajaxfileupload', 'PHP fileinfo is not installed') );
                 }
 
                 $extension  = pathinfo($link, PATHINFO_EXTENSION);
@@ -123,7 +123,7 @@ class UploadController extends Controller
 
                 if (!$fileName)
                 {
-                    throw new Exception( \Yii::t('skeeks/yii2-fileupload', 'Could not determine file name') );
+                    throw new Exception( \Yii::t('skeeks/yii2-ajaxfileupload', 'Could not determine file name') );
                 }
 
                 $rootPath = $directory . $fileName;
@@ -131,7 +131,7 @@ class UploadController extends Controller
 
                 if (!$is_file_saved)
                 {
-                    throw new Exception( \Yii::t('skeeks/yii2-fileupload', 'Could not save file') );
+                    throw new Exception( \Yii::t('skeeks/yii2-ajaxfileupload', 'Could not save file') );
                 }
 
                 try
@@ -139,12 +139,12 @@ class UploadController extends Controller
                     $mimeType = FileHelper::getMimeType($rootPath, null, false);
                 } catch (InvalidConfigException $e)
                 {
-                    throw new Exception( \Yii::t('skeeks/yii2-fileupload', 'Could not determine file extension:') . " " . $e->getMessage());
+                    throw new Exception( \Yii::t('skeeks/yii2-ajaxfileupload', 'Could not determine file extension:') . " " . $e->getMessage());
                 }
 
                 if (!$mimeType)
                 {
-                    throw new Exception( \Yii::t('skeeks/yii2-fileupload', 'Could not determine file mimeType') );
+                    throw new Exception( \Yii::t('skeeks/yii2-ajaxfileupload', 'Could not determine file mimeType') );
                 }
 
 
@@ -172,7 +172,7 @@ class UploadController extends Controller
 
                         if (!$is_file_saved)
                         {
-                            throw new Exception( \Yii::t('skeeks/yii2-fileupload', 'Could not save file') );
+                            throw new Exception( \Yii::t('skeeks/yii2-ajaxfileupload', 'Could not save file') );
                         }
                     }
                 }

@@ -1,5 +1,5 @@
 <?php
-/** @var \skeeks\yii2\fileupload\widgets\AjaxFileUploadWidget $widget */
+/** @var \skeeks\yii2\ajaxfileupload\widgets\AjaxFileUploadWidget $widget */
 /** @var string $input the code for the input */
 /* @var $this yii\web\View */
 $widget = $this->context;
@@ -34,7 +34,7 @@ $widget = $this->context;
             <?= $element ?>
         </div>
 <?
-\skeeks\yii2\fileupload\widgets\assets\AjaxFileUploadWidgetAsset::register($this);
+\skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadWidgetAsset::register($this);
 $js = \yii\helpers\Json::encode($widget->clientOptions);
 
 $this->registerJs(<<<JS

@@ -7,20 +7,20 @@ Installation
 Either run
 
 ```
-php composer.phar require --prefer-dist skeeks/yii2-file-upload "*"
+php composer.phar require --prefer-dist skeeks/yii2-ajax-file-upload "*"
 ```
 
 or add
 
 ```
-"skeeks/yii2-file-upload": "*"
+"skeeks/yii2-ajax-file-upload": "*"
 ```
 
 ```
 "repositories": [
     {
         "type": "git",
-        "url":  "https://github.com/skeeks-cms/cms-file-upload.git"
+        "url":  "https://github.com/skeeks-semenov/yii2-ajax-file-upload.git"
     }
 ]
 ```

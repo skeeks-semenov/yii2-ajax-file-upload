@@ -6,12 +6,12 @@
  * @date 26.04.2017
  */
 
-namespace skeeks\yii2\fileupload\widgets;
+namespace skeeks\yii2\ajaxfileupload\widgets;
 use dosamigos\fileupload\FileUpload;
 use dosamigos\fileupload\FileUploadAsset;
 use dosamigos\fileupload\FileUploadPlusAsset;
-use skeeks\yii2\fileupload\FileUploadModule;
-use skeeks\yii2\fileupload\widgets\assets\AjaxFileUploadDefaultToolAsset;
+use skeeks\yii2\ajaxfileupload\AjaxFileUploadModule;
+use skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadDefaultToolAsset;
 use skeeks\yii2\models\CmsStorageFile;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
@@ -53,7 +53,7 @@ use yii\widgets\InputWidget;
  *
  * Class AjaxFileUploadDefaultTool
  *
- * @package skeeks\yii2\fileupload\widgets
+ * @package skeeks\yii2\ajaxfileupload\widgets
  */
 class AjaxFileUploadDefaultTool extends AjaxFileUploadTool
 {

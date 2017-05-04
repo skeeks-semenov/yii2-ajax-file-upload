@@ -6,12 +6,12 @@
  * @date 26.04.2017
  */
 
-namespace skeeks\yii2\fileupload\widgets;
+namespace skeeks\yii2\ajaxfileupload\widgets;
 use dosamigos\fileupload\FileUpload;
 use dosamigos\fileupload\FileUploadAsset;
 use dosamigos\fileupload\FileUploadPlusAsset;
-use skeeks\yii2\fileupload\FileUploadModule;
-use skeeks\yii2\fileupload\widgets\assets\AjaxFileUploadWidgetAsset;
+use skeeks\yii2\ajaxfileupload\AjaxFileUploadModule;
+use skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadWidgetAsset;
 use skeeks\yii2\models\CmsStorageFile;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
@@ -34,7 +34,7 @@ class AjaxFileUploadWidget extends InputWidget
 
     public $view_file        = 'default';
 
-    public $upload_url      = ['/fileupload/upload'];
+    public $upload_url      = ['/ajaxfileupload/upload'];
 
     public $multiple        = false;
 
@@ -69,7 +69,7 @@ class AjaxFileUploadWidget extends InputWidget
             throw new InvalidConfigException('Invalid config');
         }
 
-        FileUploadModule::registerTranslations();
+        AjaxFileUploadModule::registerTranslations();
 
         $this->upload_url = Url::to($this->upload_url);
 
@@ -78,10 +78,10 @@ class AjaxFileUploadWidget extends InputWidget
         $this->clientOptions['id'] = $this->id;
 
         $this->clientOptions['fileStates'] = [
-            'queue' => \Yii::t('skeeks/yii2-fileupload', 'Queue'),
-            'process' => \Yii::t('skeeks/yii2-fileupload', 'Loading'),
-            'fail' => \Yii::t('skeeks/yii2-fileupload', 'Fail'),
-            'success' => \Yii::t('skeeks/yii2-fileupload', 'Success'),
+            'queue' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Queue'),
+            'process' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Loading'),
+            'fail' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Fail'),
+            'success' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Success'),
         ];
 
         if ($this->multiple)

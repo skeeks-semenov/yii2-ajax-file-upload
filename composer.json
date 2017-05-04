@@ -1,5 +1,5 @@
 {
-	"name": "skeeks/yii2-file-upload",
+	"name": "skeeks/yii2-ajax-file-upload",
 	"description": "Yii2 files upload",
 	"keywords": ["yii", "skeeks", "framework", "component"],
   	"homepage": "https://cms.skeeks.com/",
@@ -8,7 +8,7 @@
 	"support": {
         "issues": "https://skeeks.com/",
         "wiki": "https://cms.skeeks.com/docs",
-        "source": "https://github.com/skeeks-semenov/yii2-file-upload"
+        "source": "https://github.com/skeeks-semenov/yii2-ajax-file-upload"
     },
 	"authors": [
 		{
@@ -19,12 +19,12 @@
 	"require": {
 		"yiisoft/yii2": "*",
 		"skeeks/yii2-sx": "*",
-		"2amigos/yii2-file-upload-widget": "*",
+		"2amigos/yii2-ajax-file-upload-widget": "*",
 		"yiisoft/yii2-httpclient": "*"
 	},
     "autoload": {
         "psr-4": {
-            "skeeks\\yii2\\fileupload\\": "src/"
+            "skeeks\\yii2\\ajaxfileupload\\": "src/"
         }
     }
 }

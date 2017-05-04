@@ -6,11 +6,11 @@
  * @date 26.04.2017
  */
 
-namespace skeeks\yii2\fileupload\widgets;
+namespace skeeks\yii2\ajaxfileupload\widgets;
 use dosamigos\fileupload\FileUpload;
 use dosamigos\fileupload\FileUploadAsset;
 use dosamigos\fileupload\FileUploadPlusAsset;
-use skeeks\yii2\fileupload\FileUploadModule;
+use skeeks\yii2\ajaxfileupload\AjaxFileUploadModule;
 use skeeks\yii2\IHasInfo;
 use skeeks\yii2\models\CmsStorageFile;
 use skeeks\yii2\traits\THasInfo;
@@ -26,7 +26,7 @@ use yii\widgets\InputWidget;
  * 
  * Class AjaxFileUploadTool
  *
- * @package skeeks\yii2\fileupload\widgets
+ * @package skeeks\yii2\ajaxfileupload\widgets
  */
 abstract class AjaxFileUploadTool extends Widget
     implements IHasInfo

@@ -11,8 +11,8 @@ return [
 
     'modules' =>
     [
-        'fileupload' => [
-            'class'         => '\skeeks\yii2\fileupload\FileUploadModule',
+        'ajaxfileupload' => [
+            'class'         => '\skeeks\yii2\ajaxfileupload\AjaxFileUploadModule',
         ]
     ]
 ];
