@@ -34,14 +34,24 @@ use yii\web\UploadedFile;
  */
 class UploadController extends Controller
 {
-    public $defaultAction           = 'upload';
+    public $defaultAction       = 'upload';
 
-    public $local_root_tmp_dir      = '@frontend/web/assets/temp';
-    public $local_public_tmp_dir    = '/assets/temp';
+    public $root_dir            = '';
+    public $public_dir          = '';
 
     public function init()
     {
         parent::init();
+
+        if (!$this->root_dir)
+        {
+            $this->root_dir = $this->module->root_dir;
+        }
+
+        if (!$this->public_dir)
+        {
+            $this->public_dir = $this->module->public_dir;
+        }
     }
 
     /**
@@ -56,7 +66,7 @@ class UploadController extends Controller
             $file = UploadedFile::getInstanceByName(\Yii::$app->request->post('formName'));
 
             $uid = uniqid(time(), true);
-            $directory = \Yii::getAlias($this->local_root_tmp_dir) . DIRECTORY_SEPARATOR . $uid . DIRECTORY_SEPARATOR;
+            $directory = \Yii::getAlias($this->root_dir) . DIRECTORY_SEPARATOR . $uid . DIRECTORY_SEPARATOR;
             if (!is_dir($directory))
             {
                 FileHelper::createDirectory($directory);
@@ -75,7 +85,7 @@ class UploadController extends Controller
                     throw new Exception(\Yii::t('app', 'Could not upload the image to a local folder'));
                 }
 
-                $src = $this->local_public_tmp_dir . '/' . $uid . "/" . $file->name;
+                $src = $this->public_dir . '/' . $uid . "/" . $file->name;
                 $rr->success = true;
                 $data = [
                     'name'          =>  $file->name,
@@ -174,7 +184,7 @@ class UploadController extends Controller
                 }
 
 
-                $src = $this->local_public_tmp_dir . '/' . $uid . "/" . $fileName;
+                $src = $this->public_dir . '/' . $uid . "/" . $fileName;
                 $rr->success = true;
 
                 $data = [

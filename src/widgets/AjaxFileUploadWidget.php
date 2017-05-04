@@ -24,6 +24,7 @@ use yii\helpers\Url;
 use yii\widgets\InputWidget;
 
 /**
+ * @property AjaxFileUploadModule|null $module
  * @property AjaxFileUploadDefaultTool|AjaxFileUploadTool $defaultTool
  *
  * Class AjaxFileUploadWidget
@@ -33,7 +34,7 @@ class AjaxFileUploadWidget extends InputWidget
 {
     public static $autoIdPrefix = 'AjaxFileUploadWidget';
 
-    public $view_file        = 'default';
+    public $view_file        = '@skeeks/yii2/ajaxfileupload/widgets/views/default';
 
     public $upload_url      = ['/ajaxfileupload/upload'];
 
@@ -110,38 +111,69 @@ class AjaxFileUploadWidget extends InputWidget
     {
         if ($this->multiple)
         {
-
+            if ($value = $this->model->{$this->attribute})
+            {
+                if (is_array($value))
+                {
+                    foreach ($value as $val)
+                    {
+                        $this->clientOptions['files'][] = $this->_getClientFileData($val);
+                    }
+                }
+            }
         } else
         {
             if ($value = $this->model->{$this->attribute})
             {
-                $name = pathinfo($value, PATHINFO_BASENAME);
-                $mimeType = FileHelper::getMimeType($value, null, false);
-                $size = filesize($value);
-                $fileData = [
-                    'name'  => $name,
-                    'value' => $value,
-                    'state' => 'success',
-                    'size'  => $size,
-                    'sizeFormated'  => \Yii::$app->formatter->asShortSize($size),
-                    'type'  => $mimeType,
-                    'src'   => $value,
-                ];
-
-                $type = $mimeType ? explode("/", $mimeType)[0] : "";
-
-                if ($type == 'image')
-                {
-                    $image = Image::getImagine()->open($value);
-                    $fileData['image'] = [
-                        'height' => $image->getSize()->getHeight(),
-                        'width' => $image->getSize()->getWidth(),
-                    ];
-                }
-
-                $this->clientOptions['files'][] = $fileData;
+                $this->clientOptions['files'][] = $this->_getClientFileData($value);
             }
         }
+    }
+
+    /**
+     * @param $value
+     * @return array
+     */
+    protected function _getClientFileData($value)
+    {
+        $rootDir = \Yii::getAlias($this->module->root_dir);
+
+        if (strpos($value, $rootDir) !== false)
+        {
+            //Root file
+            $name       = pathinfo($value, PATHINFO_BASENAME);
+            $dirname    = pathinfo($value, PATHINFO_DIRNAME);
+
+            $dirData = explode('/', $dirname);
+
+            $src = $this->module->public_dir . "/" . $dirData[count($dirData)-1] . "/" . $name;
+            $mimeType   = FileHelper::getMimeType($value, null, false);
+            $size       = filesize($value);
+            $fileData = [
+                'name'  => $name,
+                'value' => $value,
+                'state' => 'success',
+                'size'  => $size,
+                'sizeFormated'  => \Yii::$app->formatter->asShortSize($size),
+                'type'  => $mimeType,
+                'src'   => $src,
+            ];
+
+            $type = $mimeType ? explode("/", $mimeType)[0] : "";
+
+            if ($type == 'image')
+            {
+                $image = Image::getImagine()->open($value);
+                $fileData['image'] = [
+                    'height' => $image->getSize()->getHeight(),
+                    'width' => $image->getSize()->getWidth(),
+                ];
+            }
+        }
+
+
+
+        return $fileData;
     }
 
     /**
@@ -181,5 +213,13 @@ class AjaxFileUploadWidget extends InputWidget
     public function getDefaultTool()
     {
         return reset($this->tools);
+    }
+
+    /**
+     * @return AjaxFileUploadModule|null
+     */
+    public function getModule()
+    {
+        return \Yii::$app->getModule('ajaxfileupload');
     }
 }

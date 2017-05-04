@@ -15,6 +15,9 @@ class AjaxFileUploadModule extends \yii\base\Module
 {
     public $controllerNamespace = 'skeeks\yii2\ajaxfileupload\controllers';
 
+    public $root_dir            = '@frontend/web/assets/temp';
+    public $public_dir          = '/assets/temp';
+
     public function init()
     {
         parent::init();

@@ -11,6 +11,8 @@
 namespace yii\web;
 
 /**
+ *
+ *
  * Class Application
  * @package yii\web
  */
