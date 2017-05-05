@@ -67,6 +67,8 @@ class AjaxFileUploadWidget extends InputWidget
 
     public function init()
     {
+        parent::init();
+
         if (!$this->hasModel())
         {
             throw new InvalidConfigException('Invalid config');
@@ -137,9 +139,9 @@ class AjaxFileUploadWidget extends InputWidget
      */
     protected function _getClientFileData($value)
     {
-        $rootDir = \Yii::getAlias($this->module->private_tmp_dir);
+        $fileData = null;
 
-        if (strpos($value, $rootDir) !== false)
+        if (file_exists($value))
         {
             //Root file
             $name       = pathinfo($value, PATHINFO_BASENAME);
@@ -197,10 +199,10 @@ class AjaxFileUploadWidget extends InputWidget
         if ($this->multiple)
         {
             $items = [];
-            if ($this->model->{$this->attribute})
+            /*if ($this->model->{$this->attribute})
             {
                 $items = ArrayHelper::map($this->getCmsFiles(), 'id', 'id');
-            }
+            }*/
 
             $element = $this->hasModel()
                 ? Html::activeListBox($this->model, $this->attribute, $items, $this->options)

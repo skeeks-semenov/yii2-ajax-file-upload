@@ -49,7 +49,6 @@
                 _.each(this.get('files'), function(filedata)
                 {
                     var File = new sx.classes.fileupload.File(self, filedata);
-                    console.log(File);
                     self.appendFile(File);
                 });
             }
