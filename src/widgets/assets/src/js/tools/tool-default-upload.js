@@ -104,7 +104,7 @@
                     FileObject.set('state', 'success');
 
                     FileObject.merge(data.result.data)
-                    FileObject.setValue(data.result.data.rootPath);
+                    FileObject.setValue(data.result.data.value);
                 } else
                 {
                     FileObject.set('error', data.result.message);

@@ -8,6 +8,7 @@
 
 namespace skeeks\yii2\ajaxfileupload\controllers;
 
+use Imagine\Image\Box;
 use skeeks\sx\helpers\ResponseHelper;
 use skeeks\yii2\vkDatabase\models\VkCity;
 use skeeks\imagine\Image;
@@ -36,21 +37,15 @@ class UploadController extends Controller
 {
     public $defaultAction       = 'upload';
 
-    public $root_dir            = '';
-    public $public_dir          = '';
+    public $private_tmp_dir     = '';
 
     public function init()
     {
         parent::init();
 
-        if (!$this->root_dir)
+        if (!$this->private_tmp_dir)
         {
-            $this->root_dir = $this->module->root_dir;
-        }
-
-        if (!$this->public_dir)
-        {
-            $this->public_dir = $this->module->public_dir;
+            $this->private_tmp_dir = $this->module->private_tmp_dir;
         }
     }
 
@@ -66,7 +61,7 @@ class UploadController extends Controller
             $file = UploadedFile::getInstanceByName(\Yii::$app->request->post('formName'));
 
             $uid = uniqid(time(), true);
-            $directory = \Yii::getAlias($this->root_dir) . DIRECTORY_SEPARATOR . $uid . DIRECTORY_SEPARATOR;
+            $directory = \Yii::getAlias($this->private_tmp_dir) . DIRECTORY_SEPARATOR . $uid . DIRECTORY_SEPARATOR;
             if (!is_dir($directory))
             {
                 FileHelper::createDirectory($directory);
@@ -85,12 +80,10 @@ class UploadController extends Controller
                     throw new Exception(\Yii::t('app', 'Could not upload the image to a local folder'));
                 }
 
-                $src = $this->public_dir . '/' . $uid . "/" . $file->name;
                 $rr->success = true;
                 $data = [
                     'name'          =>  $file->name,
-                    "src"           =>  $src,
-                    "rootPath"      =>  $rootPath,
+                    "value"         =>  $rootPath,
                 ];
 
             } else if ($link = \Yii::$app->request->post('link'))
@@ -184,13 +177,11 @@ class UploadController extends Controller
                 }
 
 
-                $src = $this->public_dir . '/' . $uid . "/" . $fileName;
                 $rr->success = true;
 
                 $data = [
                     'name'          =>  $fileName,
-                    "src"           =>  $src,
-                    "rootPath"      =>  $rootPath,
+                    "value"         =>  $rootPath,
                 ];
             }
 
@@ -202,13 +193,27 @@ class UploadController extends Controller
             $data['size'] = $size;
             $data['sizeFormated'] = \Yii::$app->formatter->asShortSize($size);
 
+
             if ($type == 'image')
             {
                 $image = Image::getImagine()->open($rootPath);
+
                 $data['image'] = [
-                    'height' => $image->getSize()->getHeight(),
-                    'width' => $image->getSize()->getWidth(),
+                    'height'    => $image->getSize()->getHeight(),
+                    'width'     => $image->getSize()->getWidth(),
                 ];
+
+                $previewHeight      = $image->getSize()->getHeight();
+                $previewWidth       = $image->getSize()->getWidth();
+
+                if ($image->getSize()->getHeight() > 200)
+                {
+                    $previewHeight      = 200;
+                    $proportion         = $previewHeight / $image->getSize()->getHeight();
+                    $previewWidth       = $previewWidth * $proportion;
+                }
+
+                $data['src'] = "data:image/png;base64," . base64_encode($image->resize(new Box($previewWidth, $previewHeight))->get('png'));
             }
 
             $rr->data = $data;

@@ -10,6 +10,7 @@ namespace skeeks\yii2\ajaxfileupload\widgets;
 use dosamigos\fileupload\FileUpload;
 use dosamigos\fileupload\FileUploadAsset;
 use dosamigos\fileupload\FileUploadPlusAsset;
+use Imagine\Image\Box;
 use skeeks\imagine\Image;
 use skeeks\yii2\ajaxfileupload\AjaxFileUploadModule;
 use skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadWidgetAsset;
@@ -136,7 +137,7 @@ class AjaxFileUploadWidget extends InputWidget
      */
     protected function _getClientFileData($value)
     {
-        $rootDir = \Yii::getAlias($this->module->root_dir);
+        $rootDir = \Yii::getAlias($this->module->private_tmp_dir);
 
         if (strpos($value, $rootDir) !== false)
         {
@@ -146,7 +147,6 @@ class AjaxFileUploadWidget extends InputWidget
 
             $dirData = explode('/', $dirname);
 
-            $src = $this->module->public_dir . "/" . $dirData[count($dirData)-1] . "/" . $name;
             $mimeType   = FileHelper::getMimeType($value, null, false);
             $size       = filesize($value);
             $fileData = [
@@ -156,7 +156,6 @@ class AjaxFileUploadWidget extends InputWidget
                 'size'  => $size,
                 'sizeFormated'  => \Yii::$app->formatter->asShortSize($size),
                 'type'  => $mimeType,
-                'src'   => $src,
             ];
 
             $type = $mimeType ? explode("/", $mimeType)[0] : "";
@@ -168,6 +167,18 @@ class AjaxFileUploadWidget extends InputWidget
                     'height' => $image->getSize()->getHeight(),
                     'width' => $image->getSize()->getWidth(),
                 ];
+
+                $previewHeight      = $image->getSize()->getHeight();
+                $previewWidth       = $image->getSize()->getWidth();
+
+                if ($image->getSize()->getHeight() > 200)
+                {
+                    $previewHeight      = 200;
+                    $proportion         = $previewHeight / $image->getSize()->getHeight();
+                    $previewWidth       = $previewWidth * $proportion;
+                }
+
+                $fileData['src'] = "data:image/png;base64," . base64_encode($image->resize(new Box($previewWidth, $previewHeight))->get('png'));
             }
         }
 

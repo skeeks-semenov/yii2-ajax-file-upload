@@ -38,9 +38,8 @@ Configuration app
     
         'controllerMap' => [
             'upload' => [
-                'class' => '\skeeks\yii2\ajaxfileupload\controllers\UploadController',
-                'local_root_tmp_dir'    => '@public-data/temp',
-                'local_public_tmp_dir'  => 'public-data/temp'
+                'class'                 => '\skeeks\yii2\ajaxfileupload\controllers\UploadController',
+                'private_tmp_dir'       => '@runtime/ajaxfileupload',
             ]
         ]
     ]

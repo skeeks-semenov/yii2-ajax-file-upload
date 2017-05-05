@@ -53,7 +53,7 @@
                 {
                     FileObject.set('state', 'success');
                     FileObject.merge(data.data);
-                    FileObject.setValue(data.data.rootPath);
+                    FileObject.setValue(data.data.value);
                     FileObject.render();
                 });
 
