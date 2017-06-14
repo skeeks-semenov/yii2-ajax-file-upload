@@ -64,7 +64,6 @@
 
         /**
          * @param id
-         * @returns {null}
          */
         getTool: function(id)
         {
@@ -72,8 +71,6 @@
             {
                 return Tool.get('id') == id;
             });
-            
-            return null;
         },
 
         /**
