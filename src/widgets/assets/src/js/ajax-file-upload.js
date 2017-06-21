@@ -26,6 +26,7 @@
             var self = this;
             
             this.JFiles = $(".sx-files", this.getJWrapper());
+            this.JItemTemplate = $(".sx-item-template", this.getJWrapper()).children();
             this.JTools = $(".sx-tools", this.getJWrapper());
             this.JElement = $(".sx-element", this.getJWrapper());
 
@@ -183,7 +184,6 @@
             this.change();
             return this;
         }
-
     });
 
 })(sx, sx.$, sx._);

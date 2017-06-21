@@ -136,7 +136,9 @@
         {
             if (this.JWrapper === null)
             {
-                this.JWrapper = $('<div>', {'class': 'col-md-3 sx-file'});
+                this.JWrapper = this.Uploader.JItemTemplate.clone();
+                console.log(this.JWrapper);
+                /*this.JWrapper = $('<div>', {'class': 'col-md-3 sx-file'});*/
             }
         },
 

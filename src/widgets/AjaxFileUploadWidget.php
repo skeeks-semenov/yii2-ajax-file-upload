@@ -65,6 +65,14 @@ class AjaxFileUploadWidget extends InputWidget
 
     public $clientOptions         = [];
 
+    /**
+     * @var array
+     */
+    public $itemOptions = [
+        'tag'   => 'div',
+        'class' => 'col-md-3 sx-file',
+    ];
+
     public function init()
     {
         parent::init();
@@ -234,5 +242,16 @@ class AjaxFileUploadWidget extends InputWidget
     public function getModule()
     {
         return \Yii::$app->getModule('ajaxfileupload');
+    }
+
+    /**
+     * @return string
+     */
+    public function renderItemTemplate()
+    {
+        $options = $this->itemOptions;
+        $tag = ArrayHelper::remove($options, 'tag', 'div');
+
+        return Html::tag($tag, '', $options);
     }
 }
