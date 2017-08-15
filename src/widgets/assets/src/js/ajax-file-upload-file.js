@@ -190,7 +190,9 @@
                 if (this.getType() == 'image')
                 {
                     self.JFilePrev.empty().append(
-                        $('<img>', {'src' : self.get('src')})
+                        $('<a>', {'href' : self.get('src'), 'target' : '_blank', 'data-pjax' : '0'}).append(
+                            $('<img>', {'src' : self.get('src')})
+                        )
                     );
                 };
 
