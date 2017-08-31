@@ -75,7 +75,7 @@ Console commands
 ----------
 
 ```bash
-
+php yii ajaxfileupload/cleanup
 ```
 
 
