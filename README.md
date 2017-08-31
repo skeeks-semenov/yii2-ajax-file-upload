@@ -1,6 +1,12 @@
 Yii2 file upload
 ===================================
 
+[![Latest Stable Version](https://poser.pugx.org/skeeks/yii2-ajax-file-upload/v/stable.png)](https://packagist.org/packages/skeeks/yii2-ajax-file-upload)
+[![Total Downloads](https://poser.pugx.org/skeeks/yii2-ajax-file-upload/downloads.png)](https://packagist.org/packages/skeeks/yii2-ajax-file-upload)
+[![Reference Status](https://www.versioneye.com/php/skeeks:yii2-ajax-file-upload/reference_badge.svg)](https://www.versioneye.com/php/skeeks:yii2-ajax-file-upload/references)
+[![Dependency Status](https://www.versioneye.com/php/skeeks:yii2-ajax-file-upload/dev-master/badge.png)](https://www.versioneye.com/php/skeeks:yii2-ajax-file-upload/dev-master)
+
+
 Installation
 ------------
 
