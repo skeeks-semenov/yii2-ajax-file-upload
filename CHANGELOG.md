@@ -1,6 +1,10 @@
 CHANGELOG
 ==============
 
+1.0.0-beta
+-----------------
+ * Add cleanup command
+ 
 1.0.0-alpha4
 -----------------
  * Link a new tab

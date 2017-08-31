@@ -25,7 +25,7 @@ or add
 ]
 ```
 
-Configuration app
+Configuration web app
 ----------
 
 
@@ -34,7 +34,30 @@ Configuration app
 'modules' => 
 [
     'ajaxfileupload' => [
-        'class'         => '\skeeks\yii2\ajaxfileupload\AjaxFileUploadModule',
+        'class'         => 'skeeks\yii2\ajaxfileupload\AjaxFileUploadModule',
+    
+        'controllerMap' => [
+            'upload' => [
+                'class'                 => 'skeeks\yii2\ajaxfileupload\controllers\UploadController',
+                'private_tmp_dir'       => '@runtime/ajaxfileupload',
+            ]
+        ]
+    ]
+]
+
+```
+
+Configuration console app
+----------
+
+
+```php
+
+'modules' => 
+[
+    'ajaxfileupload' => [
+        'class'                 => 'skeeks\yii2\ajaxfileupload\AjaxFileUploadModule',
+        'controllerNamespace'   => 'skeeks\yii2\ajaxfileupload\console\controllers'
     
         'controllerMap' => [
             'upload' => [
@@ -46,6 +69,15 @@ Configuration app
 ]
 
 ```
+
+
+Console commands
+----------
+
+```bash
+
+```
+
 
 ##Links
 * [Web site (rus)](https://cms.skeeks.com)
