@@ -1,6 +1,10 @@
 CHANGELOG
 ==============
 
+1.0.0
+-----------------
+ * Update
+ 
 1.0.0-beta
 -----------------
  * Add cleanup command
