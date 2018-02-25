@@ -109,9 +109,15 @@
          */
         setValue: function(value)
         {
+            var self = this;
+
             this.set('value', value);
-            this.trigger('changeValue');
-            this.trigger('change');
+
+            _.delay(function () {
+                self.trigger('changeValue');
+                self.trigger('change');
+            }, 300);
+
             return this;
         },
 
@@ -137,7 +143,6 @@
             if (this.JWrapper === null)
             {
                 this.JWrapper = this.Uploader.JItemTemplate.clone();
-                console.log(this.JWrapper);
                 /*this.JWrapper = $('<div>', {'class': 'col-md-3 sx-file'});*/
             }
         },
@@ -150,6 +155,7 @@
             var self = this;
 
             this._initJWrapper();
+
 
             this.JCaption       = $('<div>', {'class' : 'caption'});
             this.JThumbWrapper  = $('<div>', {'class' : 'thumbnail'});
@@ -209,6 +215,8 @@
 
             this.JWrapper.empty().append(this.JControlls).append(this.JThumbWrapper);
 
+            this.JWrapper.attr('data-value', this.getValue());
+            this.JWrapper.addClass('sx-value-element');
 
 
             this.JControllsRemove.on('click', function () {

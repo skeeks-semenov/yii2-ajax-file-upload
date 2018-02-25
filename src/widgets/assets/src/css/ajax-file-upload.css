@@ -11,7 +11,10 @@
 .sx-file
 {
     text-align: center;
+    /*width: 200px;*/
+    float: left;
 }
+
 
 
     .sx-file .sx-controlls

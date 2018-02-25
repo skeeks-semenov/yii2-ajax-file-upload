@@ -70,7 +70,7 @@ class AjaxFileUploadWidget extends InputWidget
      */
     public $itemOptions = [
         'tag'   => 'div',
-        'class' => 'col-md-3 sx-file',
+        'class' => 'sx-file col-md-2',
     ];
 
     public function init()

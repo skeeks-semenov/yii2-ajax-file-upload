@@ -53,6 +53,25 @@
                     self.appendFile(File);
                 });
             }
+
+
+            if (this.isMultiple()) {
+                this.JFiles.sortable(
+                {
+                    cursor: "move",
+                    //handle: ".sx-tree-move",
+                    forceHelperSize: true,
+                    forcePlaceholderSize: true,
+                    opacity: 0.5,
+                    grid: [ 2, 2 ],
+
+                    update: function( event, ui )
+                    {
+                        self.change();
+                    }
+                    /*placeholder: "portlet-placeholder ui-corner-all"*/
+                });
+            }
         },
 
         /**
@@ -142,12 +161,21 @@
             {
                 self.JElement.empty();
 
-                _.each(this.Files, function(File)
+                $('.sx-value-element', this.JFiles).each(function(el, key) {
+                    self.JElement.append(
+                        $("<option>", {'value': $(this).data('value'), 'selected': 'selected'}).append($(this).data('value'))
+                    )
+                });
+
+
+                /*_.each(this.Files, function(File)
                 {
+                    console.log(File);
+
                     self.JElement.append(
                         $("<option>", {'value': File.getValue(), 'selected': 'selected'}).append(File.getValue())
                     )
-                });
+                });*/
 
             } else
             {

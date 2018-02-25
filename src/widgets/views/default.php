@@ -39,6 +39,9 @@ $widget = $this->context;
             <?= $element ?>
         </div>
 <?
+
+\yii\jui\Sortable::widget();
+
 \skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadWidgetAsset::register($this);
 $js = \yii\helpers\Json::encode($widget->clientOptions);
 
@@ -46,6 +49,7 @@ $this->registerJs(<<<JS
 (function(sx, $, _)
 {
     sx.{$widget->id} = new sx.classes.fileupload.AjaxFileUpload({$js});
+    
 })(sx, sx.$, sx._);
 JS
 );
