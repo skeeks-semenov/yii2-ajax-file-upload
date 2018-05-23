@@ -3,9 +3,6 @@ Yii2 file upload
 
 [![Latest Stable Version](https://poser.pugx.org/skeeks/yii2-ajax-file-upload/v/stable.png)](https://packagist.org/packages/skeeks/yii2-ajax-file-upload)
 [![Total Downloads](https://poser.pugx.org/skeeks/yii2-ajax-file-upload/downloads.png)](https://packagist.org/packages/skeeks/yii2-ajax-file-upload)
-[![Reference Status](https://www.versioneye.com/php/skeeks:yii2-ajax-file-upload/reference_badge.svg)](https://www.versioneye.com/php/skeeks:yii2-ajax-file-upload/references)
-[![Dependency Status](https://www.versioneye.com/php/skeeks:yii2-ajax-file-upload/dev-master/badge.png)](https://www.versioneye.com/php/skeeks:yii2-ajax-file-upload/dev-master)
-
 
 Installation
 ------------
@@ -20,15 +17,6 @@ or add
 
 ```
 "skeeks/yii2-ajax-file-upload": "*"
-```
-
-```
-"repositories": [
-    {
-        "type": "git",
-        "url":  "https://github.com/skeeks-semenov/yii2-ajax-file-upload.git"
-    }
-]
 ```
 
 Configuration web app
@@ -85,7 +73,28 @@ php yii ajaxfileupload/cleanup
 ```
 
 
-##Links
+Usage
+-----
+
+
+
+```php
+echo $form->field($model, 'image_src')->widget(
+            \skeeks\yii2\ajaxfileupload\widgets\AjaxFileUploadWidget::class,
+            [
+                'accept' => 'image/*',
+                //'view_file' => '@skeeks/yii2/ajaxfileupload/widgets/views/buttons',
+                //'itemOptions' => [
+                //    'class' => 'col-lg-6 col-md-6 col-sm-6 sx-file sx-state-success'
+                //]
+            ]
+        );
+
+```
+
+
+Links
+-----
 * [Web site (rus)](https://cms.skeeks.com)
 * [Author](https://skeeks.com)
 * [ChangeLog](https://github.com/skeeks-cms/cms-vk-database/blob/master/CHANGELOG.md)
