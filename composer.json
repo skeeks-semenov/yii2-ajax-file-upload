@@ -1,28 +1,33 @@
 {
-	"name": "skeeks/yii2-ajax-file-upload",
-	"description": "Yii2 files upload",
-	"keywords": ["yii", "skeeks", "framework", "component"],
-  	"homepage": "https://cms.skeeks.com/",
-	"type": "yii2-extension",
-	"license": "GPL-3.0+",
-	"support": {
+    "name": "skeeks/yii2-ajax-file-upload",
+    "description": "Yii2 files upload",
+    "keywords": [
+        "yii",
+        "skeeks",
+        "framework",
+        "widget"
+    ],
+    "homepage": "https://cms.skeeks.com/",
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "support": {
         "issues": "https://skeeks.com/",
         "wiki": "https://cms.skeeks.com/docs",
         "source": "https://github.com/skeeks-semenov/yii2-ajax-file-upload"
     },
-	"authors": [
-		{
-			"name": "Semenov Alexander",
-			"email": "semenov@skeeks.com"
-		}
-	],
-	"require": {
-		"yiisoft/yii2": "~2.0.13",
-		"skeeks/yii2-sx": "~1.3.0",
-		"skeeks/yii2-imagine": "~2.0.1",
-		"2amigos/yii2-file-upload-widget": "~1.0.8",
-		"yiisoft/yii2-httpclient": "~2.0.0"
-	},
+    "authors": [
+        {
+            "name": "Semenov Alexander",
+            "email": "semenov@skeeks.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "^2.0.13",
+        "skeeks/yii2-sx": "^1.3.0",
+        "skeeks/yii2-imagine": "^2.0.1",
+        "2amigos/yii2-file-upload-widget": "~1.0.8",
+        "yiisoft/yii2-httpclient": "~2.0.0"
+    },
     "autoload": {
         "psr-4": {
             "skeeks\\yii2\\ajaxfileupload\\": "src/"
