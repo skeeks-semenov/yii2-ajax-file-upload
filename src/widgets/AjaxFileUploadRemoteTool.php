@@ -7,20 +7,10 @@
  */
 
 namespace skeeks\yii2\ajaxfileupload\widgets;
-use dosamigos\fileupload\FileUpload;
-use dosamigos\fileupload\FileUploadAsset;
-use dosamigos\fileupload\FileUploadPlusAsset;
-use skeeks\yii2\ajaxfileupload\AjaxFileUploadModule;
-use skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadDefaultToolAsset;
+
 use skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadRemoteToolAsset;
 use skeeks\yii2\models\CmsStorageFile;
-use yii\base\Component;
-use yii\base\InvalidConfigException;
-use yii\base\Widget;
-use yii\helpers\Html;
 use yii\helpers\Json;
-use yii\helpers\Url;
-use yii\widgets\InputWidget;
 
 /**
  * Class AjaxFileUploadRemoteTool
@@ -36,7 +26,7 @@ class AjaxFileUploadRemoteTool extends AjaxFileUploadTool
     {
         parent::init();
 
-        $this->id = $this->ajaxFileUploadWidget->id . "-" . $this->id;
+        $this->id = $this->ajaxFileUploadWidget->id."-".$this->id;
         $this->clientOptions['id'] = $this->id;
         $this->clientOptions['upload_url'] = $this->upload_url;
     }
@@ -52,7 +42,7 @@ class AjaxFileUploadRemoteTool extends AjaxFileUploadTool
     new sx.classes.fileupload.tools.RemoteUploadTool(sx.{$this->ajaxFileUploadWidget->id}, {$js});
 })(sx, sx.$, sx._);
 JS
-);
+        );
         return '';
     }
 

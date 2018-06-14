@@ -7,25 +7,20 @@
  */
 
 namespace skeeks\yii2\ajaxfileupload\widgets;
-use dosamigos\fileupload\FileUpload;
-use dosamigos\fileupload\FileUploadAsset;
-use dosamigos\fileupload\FileUploadPlusAsset;
+
 use Imagine\Image\Box;
 use skeeks\imagine\Image;
 use skeeks\yii2\ajaxfileupload\AjaxFileUploadModule;
-use skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadWidgetAsset;
 use skeeks\yii2\models\CmsStorageFile;
 use yii\base\InvalidConfigException;
-use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\Html;
-use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\widgets\InputWidget;
 
 /**
- * @property AjaxFileUploadModule|null $module
+ * @property AjaxFileUploadModule|null                    $module
  * @property AjaxFileUploadDefaultTool|AjaxFileUploadTool $defaultTool
  *
  * Class AjaxFileUploadWidget
@@ -35,35 +30,35 @@ class AjaxFileUploadWidget extends InputWidget
 {
     public static $autoIdPrefix = 'AjaxFileUploadWidget';
 
-    public $view_file        = '@skeeks/yii2/ajaxfileupload/widgets/views/default';
+    public $view_file = '@skeeks/yii2/ajaxfileupload/widgets/views/default';
 
-    public $upload_url      = ['/ajaxfileupload/upload'];
+    public $upload_url = ['/ajaxfileupload/upload'];
 
-    public $multiple        = false;
+    public $multiple = false;
 
-    public $accept          = ''; //'image/*';
+    public $accept = ''; //'image/*';
 
     /**
      * @var AjaxFileUploadDefaultTool[]
      */
-    public $tools         = [
+    public $tools = [
 
         'default' =>
-        [
-            'class' => AjaxFileUploadDefaultTool::class,
-            'name' => 'Загрузить',
-            'icon' => 'glyphicon glyphicon-download-alt',
-        ],
+            [
+                'class' => AjaxFileUploadDefaultTool::class,
+                'name'  => 'Загрузить',
+                'icon'  => 'glyphicon glyphicon-download-alt',
+            ],
 
         'remote' =>
-        [
-            'class' => AjaxFileUploadRemoteTool::class,
-            'name' => 'Загрузить по ссылке',
-            'icon' => 'glyphicon glyphicon-globe',
-        ]
+            [
+                'class' => AjaxFileUploadRemoteTool::class,
+                'name'  => 'Загрузить по ссылке',
+                'icon'  => 'glyphicon glyphicon-globe',
+            ],
     ];
 
-    public $clientOptions         = [];
+    public $clientOptions = [];
 
     /**
      * @var array
@@ -77,8 +72,7 @@ class AjaxFileUploadWidget extends InputWidget
     {
         parent::init();
 
-        if (!$this->hasModel())
-        {
+        if (!$this->hasModel()) {
             throw new InvalidConfigException('Invalid config');
         }
 
@@ -91,9 +85,9 @@ class AjaxFileUploadWidget extends InputWidget
         $this->clientOptions['id'] = $this->id;
 
         $this->clientOptions['fileStates'] = [
-            'queue' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Queue'),
+            'queue'   => \Yii::t('skeeks/yii2-ajaxfileupload', 'Queue'),
             'process' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Loading'),
-            'fail' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Fail'),
+            'fail'    => \Yii::t('skeeks/yii2-ajaxfileupload', 'Fail'),
             'success' => \Yii::t('skeeks/yii2-ajaxfileupload', 'Success'),
         ];
 
@@ -101,8 +95,7 @@ class AjaxFileUploadWidget extends InputWidget
 
         $tools = [];
 
-        foreach ($this->tools as $id => $config)
-        {
+        foreach ($this->tools as $id => $config) {
             $config['id'] = $id;
             $config['ajaxFileUploadWidget'] = $this;
             $tool = \Yii::createObject($config);
@@ -111,8 +104,7 @@ class AjaxFileUploadWidget extends InputWidget
 
         $this->tools = $tools;
 
-        if (!$this->tools)
-        {
+        if (!$this->tools) {
             throw new InvalidConfigException('Not configurated file upload tools');
         }
     }
@@ -120,22 +112,16 @@ class AjaxFileUploadWidget extends InputWidget
 
     protected function _initClientFiles()
     {
-        if ($this->multiple)
-        {
-            if ($value = $this->model->{$this->attribute})
-            {
-                if (is_array($value))
-                {
-                    foreach ($value as $val)
-                    {
+        if ($this->multiple) {
+            if ($value = $this->model->{$this->attribute}) {
+                if (is_array($value)) {
+                    foreach ($value as $val) {
                         $this->clientOptions['files'][] = $this->_getClientFileData($val);
                     }
                 }
             }
-        } else
-        {
-            if ($value = $this->model->{$this->attribute})
-            {
+        } else {
+            if ($value = $this->model->{$this->attribute}) {
                 $this->clientOptions['files'][] = $this->_getClientFileData($value);
             }
         }
@@ -149,49 +135,45 @@ class AjaxFileUploadWidget extends InputWidget
     {
         $fileData = null;
 
-        if (file_exists($value))
-        {
+        if (file_exists($value)) {
             //Root file
-            $name       = pathinfo($value, PATHINFO_BASENAME);
-            $dirname    = pathinfo($value, PATHINFO_DIRNAME);
+            $name = pathinfo($value, PATHINFO_BASENAME);
+            $dirname = pathinfo($value, PATHINFO_DIRNAME);
 
             $dirData = explode('/', $dirname);
 
-            $mimeType   = FileHelper::getMimeType($value, null, false);
-            $size       = filesize($value);
+            $mimeType = FileHelper::getMimeType($value, null, false);
+            $size = filesize($value);
             $fileData = [
-                'name'  => $name,
-                'value' => $value,
-                'state' => 'success',
-                'size'  => $size,
-                'sizeFormated'  => \Yii::$app->formatter->asShortSize($size),
-                'type'  => $mimeType,
+                'name'         => $name,
+                'value'        => $value,
+                'state'        => 'success',
+                'size'         => $size,
+                'sizeFormated' => \Yii::$app->formatter->asShortSize($size),
+                'type'         => $mimeType,
             ];
 
             $type = $mimeType ? explode("/", $mimeType)[0] : "";
 
-            if ($type == 'image')
-            {
+            if ($type == 'image') {
                 $image = Image::getImagine()->open($value);
                 $fileData['image'] = [
                     'height' => $image->getSize()->getHeight(),
-                    'width' => $image->getSize()->getWidth(),
+                    'width'  => $image->getSize()->getWidth(),
                 ];
 
-                $previewHeight      = $image->getSize()->getHeight();
-                $previewWidth       = $image->getSize()->getWidth();
+                $previewHeight = $image->getSize()->getHeight();
+                $previewWidth = $image->getSize()->getWidth();
 
-                if ($image->getSize()->getHeight() > 200)
-                {
-                    $previewHeight      = 200;
-                    $proportion         = $previewHeight / $image->getSize()->getHeight();
-                    $previewWidth       = $previewWidth * $proportion;
+                if ($image->getSize()->getHeight() > 200) {
+                    $previewHeight = 200;
+                    $proportion = $previewHeight / $image->getSize()->getHeight();
+                    $previewWidth = $previewWidth * $proportion;
                 }
 
-                $fileData['src'] = "data:image/png;base64," . base64_encode($image->resize(new Box($previewWidth, $previewHeight))->get('png'));
+                $fileData['src'] = "data:image/png;base64,".base64_encode($image->resize(new Box($previewWidth, $previewHeight))->get('png'));
             }
         }
-
 
 
         return $fileData;
@@ -204,8 +186,7 @@ class AjaxFileUploadWidget extends InputWidget
     {
         Html::addCssClass($this->options, 'sx-element');
 
-        if ($this->multiple)
-        {
+        if ($this->multiple) {
             $items = [];
             /*if ($this->model->{$this->attribute})
             {
@@ -215,8 +196,7 @@ class AjaxFileUploadWidget extends InputWidget
             $element = $this->hasModel()
                 ? Html::activeListBox($this->model, $this->attribute, $items, $this->options)
                 : Html::hiddenInput($this->name, $this->value, $this->options);
-        } else
-        {
+        } else {
             $element = $this->hasModel()
                 ? Html::activeHiddenInput($this->model, $this->attribute, $this->options)
                 : Html::hiddenInput($this->name, $this->value, $this->options);
@@ -224,7 +204,7 @@ class AjaxFileUploadWidget extends InputWidget
 
 
         echo $this->render($this->view_file, [
-            'element'         => $element,
+            'element' => $element,
         ]);
     }
 

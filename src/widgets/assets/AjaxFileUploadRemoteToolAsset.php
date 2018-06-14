@@ -5,13 +5,8 @@
  * @copyright (c) 2010 SkeekS
  * @date 27.04.2017
  */
+
 namespace skeeks\yii2\ajaxfileupload\widgets\assets;
-use dosamigos\fileupload\FileUpload;
-use dosamigos\fileupload\FileUploadAsset;
-use dosamigos\fileupload\FileUploadPlusAsset;
-use yii\base\Widget;
-use yii\helpers\Html;
-use yii\helpers\Json;
 
 /**
  * Class AjaxFileUploadDefaultToolAsset

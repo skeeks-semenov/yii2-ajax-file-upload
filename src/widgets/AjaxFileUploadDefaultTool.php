@@ -7,48 +7,40 @@
  */
 
 namespace skeeks\yii2\ajaxfileupload\widgets;
-use dosamigos\fileupload\FileUpload;
-use dosamigos\fileupload\FileUploadAsset;
-use dosamigos\fileupload\FileUploadPlusAsset;
-use skeeks\yii2\ajaxfileupload\AjaxFileUploadModule;
+
 use skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadDefaultToolAsset;
 use skeeks\yii2\models\CmsStorageFile;
-use yii\base\Component;
-use yii\base\InvalidConfigException;
-use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
-use yii\helpers\Url;
-use yii\widgets\InputWidget;
 
 /**
  *
  * 'options' => [
-        'accept' => 'image/*',
-        'multiple' => true
-    ],
+ * 'accept' => 'image/*',
+ * 'multiple' => true
+ * ],
  *
  *
  *  'clientOptions' => [
  *      'uploadfile' => [
-        //'maxFileSize' => 2000000,
-        //'minFileSize' => 500,
-        'acceptFileTypes' => new \yii\web\JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
-        'disableImageResize' => '/Android(?!.*Chrome)|Opera/.test(window.navigator && navigator.userAgent)',
-        'imageMaxWidth' => 10000,
-        'imageMaxHeight' => 10000,
-        'loadImageMaxFileSize' => 100000000, // 100MB
-        'imageCrop' => true,
-
-        'previewMaxWidth' => 400,
-        'previewMaxHeight' => 300,
-        'previewCrop' => true,
-        'limitMultiFileUploads' => 1,
-        'limitConcurrentUploads' => 1,
-        'dropZone' => new \yii\web\JsExpression('$(\'body\')')
-        ],
-    ],
+ * //'maxFileSize' => 2000000,
+ * //'minFileSize' => 500,
+ * 'acceptFileTypes' => new \yii\web\JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+ * 'disableImageResize' => '/Android(?!.*Chrome)|Opera/.test(window.navigator && navigator.userAgent)',
+ * 'imageMaxWidth' => 10000,
+ * 'imageMaxHeight' => 10000,
+ * 'loadImageMaxFileSize' => 100000000, // 100MB
+ * 'imageCrop' => true,
+ *
+ * 'previewMaxWidth' => 400,
+ * 'previewMaxHeight' => 300,
+ * 'previewCrop' => true,
+ * 'limitMultiFileUploads' => 1,
+ * 'limitConcurrentUploads' => 1,
+ * 'dropZone' => new \yii\web\JsExpression('$(\'body\')')
+ * ],
+ * ],
  *
  *
  * Class AjaxFileUploadDefaultTool
@@ -61,27 +53,27 @@ class AjaxFileUploadDefaultTool extends AjaxFileUploadTool
     public $clientOptions = [];
     public $defaultClientOptions = [
         'uploadfile' =>
-        [
-            'disableImageResize' => '/Android(?!.*Chrome)|Opera/.test(window.navigator && navigator.userAgent)',
-            /*'imageCrop' => true,*/
+            [
+                'disableImageResize' => '/Android(?!.*Chrome)|Opera/.test(window.navigator && navigator.userAgent)',
+                /*'imageCrop' => true,*/
 
-            'previewMaxWidth' => 150,
-            'previewMaxHeight' => 150,
-            /*'imageMaxHeight' => 300,
-            'imageMaxWidth' => 300,*/
-            'previewCrop' => false,
-            'previewCanvas' => false,
-            'previewThumbnail' => false,
-            'limitMultiFileUploads' => 1,
-            'limitConcurrentUploads' => 1,
-        ]
+                'previewMaxWidth'        => 150,
+                'previewMaxHeight'       => 150,
+                /*'imageMaxHeight' => 300,
+                'imageMaxWidth' => 300,*/
+                'previewCrop'            => false,
+                'previewCanvas'          => false,
+                'previewThumbnail'       => false,
+                'limitMultiFileUploads'  => 1,
+                'limitConcurrentUploads' => 1,
+            ],
     ];
 
     public function init()
     {
         parent::init();
 
-        $this->id = $this->ajaxFileUploadWidget->id . "_" . $this->id;
+        $this->id = $this->ajaxFileUploadWidget->id."_".$this->id;
 
         $this->options['id'] = $this->id;
         $this->options['data-url'] = $this->upload_url;
@@ -92,8 +84,7 @@ class AjaxFileUploadDefaultTool extends AjaxFileUploadTool
         $this->clientOptions['id'] = $this->id;
         $this->clientOptions['uploadfile']['dropZone'] = new \yii\web\JsExpression("$('#{$this->ajaxFileUploadWidget->id}')");
 
-        if (!$this->ajaxFileUploadWidget->multiple)
-        {
+        if (!$this->ajaxFileUploadWidget->multiple) {
             $this->clientOptions['uploadfile']['singleFileUploads'] = true;
         }
     }
@@ -109,7 +100,7 @@ class AjaxFileUploadDefaultTool extends AjaxFileUploadTool
     new sx.classes.fileupload.tools.DefaultUploadTool(sx.{$this->ajaxFileUploadWidget->id}, {$js});
 })(sx, sx.$, sx._);
 JS
-);
+        );
         return Html::fileInput($this->id, '', $this->options);
     }
 
