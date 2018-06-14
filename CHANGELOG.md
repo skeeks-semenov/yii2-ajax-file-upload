@@ -1,8 +1,9 @@
 CHANGELOG
 ==============
 
-1.0.2
+1.0.2.pre
 -----------------
+ * Fixed security bugs
  * Format code
  
 1.0.1
