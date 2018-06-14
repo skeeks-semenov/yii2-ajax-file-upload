@@ -15,7 +15,8 @@ class FileUploadPlusAsset extends \dosamigos\fileupload\FileUploadPlusAsset
 {
     public $publishOptions = [
         'except' => [
-            '*.php'
+            'server/*',
+            'test'
         ],
     ];
 }

@@ -22,7 +22,7 @@ class AjaxFileUploadDefaultToolAsset extends AjaxFileUploadWidgetAsset
 
     public $depends = [
         'yii\web\YiiAsset',
-        'dosamigos\fileupload\FileUploadPlusAsset',
+        'skeeks\yii2\ajaxfileupload\assets\FileUploadPlusAsset',
         'skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadWidgetAsset',
     ];
 }
