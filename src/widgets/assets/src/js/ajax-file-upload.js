@@ -19,6 +19,8 @@
             //Инструменты загрузки
             this.Tools  = [];
             this.Files  = [];
+
+            this.isProcess = false;
         },
 
         _onDomReady: function()
@@ -119,6 +121,15 @@
         {
             var self = this;
 
+            this.trigger('addFile', {'file' : NewFile});
+
+            if (!NewFile.getValue() && this.isProcess === false) {
+
+                this.isProcess = true;
+                this.trigger('startUpload');
+
+            }
+
             if (this.isMultiple())
             {
                 this.Files.push(NewFile);
@@ -167,16 +178,6 @@
                     )
                 });
 
-
-                /*_.each(this.Files, function(File)
-                {
-                    console.log(File);
-
-                    self.JElement.append(
-                        $("<option>", {'value': File.getValue(), 'selected': 'selected'}).append(File.getValue())
-                    )
-                });*/
-
             } else
             {
                 self.JElement.val('');
@@ -189,6 +190,21 @@
 
             self.JElement.change();
             this.trigger('change');
+
+
+            var allUploaded = true;
+
+            _.each(this.Files, function(File)
+            {
+                if (!File.getValue()) {
+                    allUploaded = false;
+                }
+            });
+
+            if (allUploaded === true) {
+                this.trigger('endUpload');
+            }
+
             return this;
         },
 
