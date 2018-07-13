@@ -1,6 +1,10 @@
 CHANGELOG
 ==============
 
+1.0.4
+-----------------
+ * Fixed: https://github.com/skeeks-semenov/yii2-ajax-file-upload/issues/3
+ 
 1.0.3
 -----------------
  * Update

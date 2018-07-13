@@ -32,7 +32,7 @@ class AjaxFileUploadWidgetAsset extends AssetBundle
 
     public $depends = [
         'yii\web\YiiAsset',
-        'skeeks\sx\assets\Core',
+        'skeeks\sx\assets\Custom',
     ];
 
     /**
