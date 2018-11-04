@@ -12,7 +12,7 @@ $widget = $this->context;
                 <?= $widget->renderItemTemplate(); ?>
             </div>
         </div>
-        <div class="sx-files">
+        <div class="sx-files col-sm-12">
         </div>
 
 

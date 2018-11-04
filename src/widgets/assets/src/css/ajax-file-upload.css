@@ -1,84 +1,73 @@
-.sx-files
-{
+.sx-files {
 
 }
 
-.sx-tools
-{
+.sx-tools {
 
 }
 
-.sx-file
-{
+.sx-file {
     text-align: center;
     /*width: 200px;*/
     float: left;
+    width: 200px;
+    margin-right: 10px;
 }
 
+.sx-file .sx-controlls {
+    position: absolute;
+    display: none;
+}
 
+.sx-file .file-preview {
+    overflow: hidden;
+    height: 150px;
+    background: white;
 
-    .sx-file .sx-controlls
-    {
-        position: absolute;
-        display: none;
-    }
+    font-size: 50px;
+    vertical-align: middle;
+    line-height: 150px;
+    color: #909090;
+}
 
-    .sx-file .file-preview
-    {
-        overflow: hidden;
-        height: 150px;
-        background: rgba(192, 192, 192, 0.14);
+.sx-file .caption .sx-title {
+    white-space: nowrap;
+    padding-top: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
 
-        font-size: 50px;
-        vertical-align: middle;
-        line-height: 150px;
-        color: #909090;
-    }
-
-    .sx-file .caption .sx-title
-    {
-        white-space: nowrap;
-        padding-top: 5px;
-        font-size: 12px;
-        font-weight: bold;
-    }
-
-.sx-file:hover .sx-controlls
-{
+.sx-file:hover .sx-controlls {
     display: block;
 }
 
-.sx-file .sx-remove:hover
-{
+.sx-file .sx-remove:hover {
     text-shadow: 2px 2px 12px red;
     color: red;
 }
 
-    .sx-file .thumbnail
-    {
-        border-radius: 0px;
-        box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.42);
-        overflow: hidden;
-    }
+.sx-file .thumbnail {
+    border-radius: 0px;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.42);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
 
-        .sx-file .thumbnail .caption
-        {
-            padding: 0px;
-        }
+.sx-file .thumbnail .caption {
+    padding: 0px;
+    background: #f9f9f9;
+}
 
-        .sx-file .thumbnail .sx-result
-        {
-            height: 32px;
-            font-size: 12px;
-        }
+.sx-file .thumbnail .sx-result {
+    height: 32px;
+    font-size: 12px;
+}
 
-.sx-state-process .sx-result
-{
+.sx-state-process .sx-result {
     background: url(../img/loaders/circulare-blue-24_24.GIF) no-repeat;
 }
 
-.file-preview img
-{
+.file-preview img {
     max-width: 150px;
     max-height: 150px;
 }
@@ -86,41 +75,39 @@
 .dropzone {
     /*background: palegreen;*/
 }
-    .dropzone.in {
-        font-size: larger;
-        background: rgba(192, 192, 192, 0.4);
-    }
-    .dropzone.hover {
-        background: rgba(255, 203, 122, 0.44);
-    }
-    .dropzone.fade {
-        -webkit-transition: all 0.3s ease-out;
-        -moz-transition: all 0.3s ease-out;
-        -ms-transition: all 0.3s ease-out;
-        -o-transition: all 0.3s ease-out;
-        transition: all 0.3s ease-out;
-        opacity: 1;
-    }
 
+.dropzone.in {
+    font-size: larger;
+    background: rgba(192, 192, 192, 0.4);
+}
 
-.sx-state-fail .sx-result
-{
+.dropzone.hover {
+    background: rgba(255, 203, 122, 0.44);
+}
+
+.dropzone.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
+
+.sx-state-fail .sx-result {
     color: red;
 }
 
-.sx-state-process
-{
+.sx-state-process {
     opacity: 0.5;
 }
 
-.sx-file.sx-state-fail .thumbnail
-{
+.sx-file.sx-state-fail .thumbnail {
     border-color: red;
 }
 
 .sx-state-fail,
-.sx-state-queue
-{
+.sx-state-queue {
     opacity: 0.3;
 }
 

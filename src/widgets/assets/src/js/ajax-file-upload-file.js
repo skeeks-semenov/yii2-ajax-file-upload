@@ -164,7 +164,7 @@
             this.JResult        = $('<div>', {'class' : 'sx-result'});
 
             this.JControllsRemove = $("<a>", {'class' : 'btn btn-xs sx-remove', 'title' : 'Удалить'}).append(
-                $('<i>', {'class' : 'glyphicon glyphicon-remove'})
+                $('<i>', {'class' : 'fa fa-times'})
             );
 
             this.JControlls.append(
