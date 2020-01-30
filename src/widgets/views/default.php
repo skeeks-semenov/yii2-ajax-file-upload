@@ -18,11 +18,11 @@ $widget = $this->context;
 
         <div class="col-sm-12 sx-tools">
             <div class="btn-group">
-              <button type="button" class="btn btn-default fileinput-button sx-run-tool" data-tool-id="<?= $widget->defaultTool->id; ?>">
+              <button type="button" class="btn u-btn-brown btn-sm fileinput-button sx-run-tool" data-tool-id="<?= $widget->defaultTool->id; ?>">
                   <i class="<?= $widget->defaultTool->icon; ?>"></i> <?= $widget->defaultTool->name; ?>
               </button>
               <? if (count($widget->tools) > 1) : ?>
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <button type="button" class="btn u-btn-brown btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdow</span>
                   </button>
