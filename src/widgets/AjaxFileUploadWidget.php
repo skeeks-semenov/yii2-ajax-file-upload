@@ -149,7 +149,7 @@ class AjaxFileUploadWidget extends InputWidget
                 'value'        => $value,
                 'state'        => 'success',
                 'size'         => $size,
-                'sizeFormated' => \Yii::$app->formatter->asShortSize($size),
+                'sizeFormated' => \Yii::$app->formatter->asShortSize($size, 2),
                 'type'         => $mimeType,
             ];
 
