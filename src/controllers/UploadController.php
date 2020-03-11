@@ -147,8 +147,8 @@ class UploadController extends Controller
                 }
 
 
-                if (!$extension)
-                {
+                //if (!$extension)
+                //{
                     $extensions = FileHelper::getExtensionsByMimeType($mimeType);
                     if ($extensions)
                     {
@@ -158,9 +158,15 @@ class UploadController extends Controller
                         } else if (in_array("png", $extensions))
                         {
                             $extension = 'png';
+                        } else if (in_array("gif", $extensions))
+                        {
+                            $extension = 'gif';
                         } else
                         {
-                            $extension = $extensions[0];
+                            if (!$extension) {
+                                $extension = $extensions[0];
+                            }
+                            
                         }
 
                         $fileName = $fileName . "." . $extension;
@@ -174,7 +180,7 @@ class UploadController extends Controller
                             throw new Exception( \Yii::t('skeeks/yii2-ajaxfileupload', 'Could not save file') );
                         }
                     }
-                }
+                //}
 
 
                 $rr->success = true;
