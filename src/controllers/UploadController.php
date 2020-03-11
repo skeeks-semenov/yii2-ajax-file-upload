@@ -9,6 +9,7 @@
 namespace skeeks\yii2\ajaxfileupload\controllers;
 
 use Imagine\Image\Box;
+use skeeks\cms\helpers\StringHelper;
 use skeeks\sx\helpers\ResponseHelper;
 use skeeks\yii2\vkDatabase\models\VkCity;
 use skeeks\imagine\Image;
