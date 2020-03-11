@@ -119,7 +119,15 @@ class UploadController extends Controller
                 }
 
                 $extension  = pathinfo($link, PATHINFO_EXTENSION);
-                $fileName   = pathinfo($link, PATHINFO_BASENAME);
+                
+                $fileNameData = $link;
+               
+                $fileNameData = str_replace(".", "_", $fileNameData);
+                $fileNameData = str_replace("?", "_", $fileNameData);
+                $fileNameData = str_replace("&", "_", $fileNameData);
+                $fileNameData = str_replace("?", "_", $fileNameData);
+                
+                $fileName   = pathinfo($fileNameData, PATHINFO_BASENAME);
 
                 if (!$fileName)
                 {
