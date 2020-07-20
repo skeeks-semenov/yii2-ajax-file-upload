@@ -211,24 +211,30 @@ class UploadController extends Controller
 
             if ($type == 'image')
             {
-                $image = Image::getImagine()->open($rootPath);
+                try {
+                    $image = Image::getImagine()->open($rootPath);
 
-                $data['image'] = [
-                    'height'    => $image->getSize()->getHeight(),
-                    'width'     => $image->getSize()->getWidth(),
-                ];
+                    $data['image'] = [
+                        'height'    => $image->getSize()->getHeight(),
+                        'width'     => $image->getSize()->getWidth(),
+                    ];
 
-                $previewHeight      = $image->getSize()->getHeight();
-                $previewWidth       = $image->getSize()->getWidth();
+                    $previewHeight      = $image->getSize()->getHeight();
+                    $previewWidth       = $image->getSize()->getWidth();
 
-                if ($image->getSize()->getHeight() > 200)
-                {
-                    $previewHeight      = 200;
-                    $proportion         = $previewHeight / $image->getSize()->getHeight();
-                    $previewWidth       = $previewWidth * $proportion;
+                    if ($image->getSize()->getHeight() > 200)
+                    {
+                        $previewHeight      = 200;
+                        $proportion         = $previewHeight / $image->getSize()->getHeight();
+                        $previewWidth       = $previewWidth * $proportion;
+                    }
+
+                    $data['src'] = "data:image/png;base64," . base64_encode($image->resize(new Box($previewWidth, $previewHeight))->get('png'));
+                } catch (\Exception $exception) {
+                    $content = file_get_contents($rootPath);
+                    $data['src'] = "data:{$mimeType};base64," . base64_encode($content);
                 }
 
-                $data['src'] = "data:image/png;base64," . base64_encode($image->resize(new Box($previewWidth, $previewHeight))->get('png'));
             }
 
             $rr->data = $data;
