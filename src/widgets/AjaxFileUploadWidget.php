@@ -156,22 +156,28 @@ class AjaxFileUploadWidget extends InputWidget
             $type = $mimeType ? explode("/", $mimeType)[0] : "";
 
             if ($type == 'image') {
-                $image = Image::getImagine()->open($value);
-                $fileData['image'] = [
-                    'height' => $image->getSize()->getHeight(),
-                    'width'  => $image->getSize()->getWidth(),
-                ];
+                //try {
+                    $image = Image::getImagine()->open($value);
 
-                $previewHeight = $image->getSize()->getHeight();
-                $previewWidth = $image->getSize()->getWidth();
-
-                if ($image->getSize()->getHeight() > 200) {
-                    $previewHeight = 200;
-                    $proportion = $previewHeight / $image->getSize()->getHeight();
-                    $previewWidth = $previewWidth * $proportion;
-                }
-
-                $fileData['src'] = "data:image/png;base64,".base64_encode($image->resize(new Box($previewWidth, $previewHeight))->get('png'));
+                    $fileData['image'] = [
+                        'height' => $image->getSize()->getHeight(),
+                        'width'  => $image->getSize()->getWidth(),
+                    ];
+    
+                    $previewHeight = $image->getSize()->getHeight();
+                    $previewWidth = $image->getSize()->getWidth();
+    
+                    if ($image->getSize()->getHeight() > 200) {
+                        $previewHeight = 200;
+                        $proportion = $previewHeight / $image->getSize()->getHeight();
+                        $previewWidth = $previewWidth * $proportion;
+                    }
+    
+                    $fileData['src'] = "data:image/png;base64,".base64_encode($image->resize(new Box($previewWidth, $previewHeight))->get('png'));
+                //} catch (\Exception $e) {
+                    
+                //} 
+                
             }
         }
 
