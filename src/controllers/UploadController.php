@@ -198,6 +198,8 @@ class UploadController extends Controller
                     'name'          =>  $fileName,
                     "value"         =>  $rootPath,
                 ];
+            } else {
+                //Проверить max_upload_file_size
             }
 
             $size = filesize($rootPath);
