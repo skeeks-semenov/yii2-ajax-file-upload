@@ -46,15 +46,15 @@ class AjaxFileUploadWidget extends InputWidget
         'default' =>
             [
                 'class' => AjaxFileUploadDefaultTool::class,
-                'name'  => 'Загрузить',
-                'icon'  => 'glyphicon glyphicon-download-alt',
+                'name'  => 'Выбрать файл',
+                'icon'  => 'fas fa-upload',
             ],
 
         'remote' =>
             [
                 'class' => AjaxFileUploadRemoteTool::class,
                 'name'  => 'Загрузить по ссылке',
-                'icon'  => 'glyphicon glyphicon-globe',
+                'icon'  => 'fas fa-link',
             ],
     ];
 
