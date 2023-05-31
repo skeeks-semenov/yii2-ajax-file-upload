@@ -36,6 +36,18 @@ class AjaxFileUploadWidget extends InputWidget
 
     public $multiple = false;
 
+    /**
+     * @var bool Показывать информацию о файлах?
+     */
+    public $is_show_file_info = true;
+
+    /**
+     * @var bool Разрешено не выбирать файл
+     */
+    public $is_allow_deselect = true;
+    
+    public $file_preview_width = "12.5rem";
+
     public $accept = ''; //'image/*';
 
     /**
@@ -191,6 +203,11 @@ class AjaxFileUploadWidget extends InputWidget
     public function run()
     {
         Html::addCssClass($this->options, 'sx-element');
+        if ($this->is_show_file_info) {
+            Html::addCssClass($this->itemOptions, 'sx-show-file-info');
+        }
+
+        
 
         if ($this->multiple) {
             $items = [];
@@ -199,16 +216,40 @@ class AjaxFileUploadWidget extends InputWidget
                 $items = ArrayHelper::map($this->getCmsFiles(), 'id', 'id');
             }*/
 
+            Html::addCssClass($this->itemOptions, 'sx-allow-deselect');
+            
             $element = $this->hasModel()
                 ? Html::activeListBox($this->model, $this->attribute, $items, $this->options)
                 : Html::hiddenInput($this->name, $this->value, $this->options);
         } else {
+            
+            if ($this->is_allow_deselect) {
+                Html::addCssClass($this->itemOptions, 'sx-allow-deselect');
+            }
+                
             $element = $this->hasModel()
                 ? Html::activeHiddenInput($this->model, $this->attribute, $this->options)
                 : Html::hiddenInput($this->name, $this->value, $this->options);
         }
 
+        $widgetId = $this->id;
+        $this->view->registerCss(<<<CSS
+#{$widgetId} .file-preview img,
+#{$widgetId} .file-preview video
+#{$widgetId} .file-preview svg {
+    max-width: {$this->file_preview_width};
+    max-height: {$this->file_preview_width};
+}
 
+#{$widgetId} .sx-file .thumbnail {
+    width: {$this->file_preview_width};
+    height: {$this->file_preview_width};
+}
+#{$widgetId} .sx-file {
+    width: {$this->file_preview_width};
+}
+CSS
+        );
         echo $this->render($this->view_file, [
             'element' => $element,
         ]);

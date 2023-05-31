@@ -63,6 +63,7 @@
                     }
                 })
             );
+            
             jQuery(this.JInput).on('fileuploadadd', function(e, data) {
 
                 var FileObject = new sx.classes.fileupload.File(self.Uploader);
@@ -80,9 +81,11 @@
 
             jQuery(this.JInput).on('fileuploadprocessalways', function(e, data) {
                 var FileObject = data.context;
-
+                
                 var index = data.index,
                 file = data.files[index];
+                
+                console.log(file);
 
                 if (file.preview) {
                     FileObject.set('preview', file.preview);
@@ -132,6 +135,14 @@
                 FileObject.set('state', 'fail');
                 FileObject.set('error', 'File upload failed');
                 FileObject.render();
+            });
+            
+            jQuery(this.JInput).on('fileuploadprogress', function(e, data) {
+                var FileObject = data.context;
+                                
+                FileObject.updateProcess(data);
+                /*console.log(data.loaded);
+                console.log(data.total);*/
             });
 
 

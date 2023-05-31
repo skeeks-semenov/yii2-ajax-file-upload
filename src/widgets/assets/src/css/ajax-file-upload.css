@@ -1,76 +1,120 @@
-.sx-files {
-
+.sx-ajax-file-uploader-wrapper .sx-tools {
+    margin-bottom: 1rem;
 }
-
-.sx-tools {
-
-}
-
 .sx-file {
-    text-align: center;
+    /*text-align: center;*/
     /*width: 200px;*/
     float: left;
-    width: 200px;
-    margin-right: 10px;
+    width: 19rem;
+    position: relative;
+    margin-right: 1rem;
 }
 
 .sx-file .sx-controlls {
     position: absolute;
     display: none;
+    z-index: 1;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+.sx-file .sx-controlls .sx-remove{
+    cursor: pointer;
+    text-shadow: 1px 0px 0px white;
 }
 
 .sx-file .file-preview {
     overflow: hidden;
-    height: 150px;
     background: white;
 
-    font-size: 50px;
-    vertical-align: middle;
-    line-height: 150px;
+    /*height: 14rem;
+    font-size: 3rem;*/
+    /* vertical-align: middle; */
+    height: 100%;
     color: #909090;
+    display: flex;
+    align-items: center;
+    /* text-align: center; */
+    width: 100%;
 }
 
 .sx-file .caption .sx-title {
     white-space: nowrap;
-    padding-top: 5px;
-    font-size: 12px;
-    font-weight: bold;
+    padding: 0 0.5rem;
+    /*font-size: 12px;*/
+    /*font-weight: bold;*/
     overflow: hidden;
 }
 
-.sx-file:hover .sx-controlls {
+
+
+.sx-file.sx-allow-deselect:hover .sx-controlls {
+    display: block;
+    transition: 300ms;
+}
+
+.sx-file.sx-state-process .sx-controlls,
+.sx-file.sx-state-queue .sx-controlls {
     display: block;
 }
 
-.sx-file .sx-remove:hover {
-    text-shadow: 2px 2px 12px red;
-    color: red;
-}
 
 .sx-file .thumbnail {
-    border-radius: 0px;
-    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.42);
+    border-radius: 0.5rem;
+    /* box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.42); */
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+
+    position: relative;
+}
+
+.sx-file.sx-show-file-info:hover .thumbnail .caption {
+    display: block;
+    transition: 300ms;
+}
+
+.sx-file.sx-state-queue .thumbnail .caption {
+    display: block;
+}
+.sx-file.sx-state-process .thumbnail .caption {
+    display: block;
 }
 
 .sx-file .thumbnail .caption {
-    padding: 0px 10px;
-    background: #f9f9f9;
+    /*padding: 0px 10px;*/
+    background: #ffffff;
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    display: none;
+    transition: 300ms;
+    padding: 0.5rem 0;
+    font-size: 0.75rem;
 }
 
 .sx-file .thumbnail .sx-result {
-    height: 22px;
-    font-size: 12px;
+    padding: 0 0.5rem;
+    white-space: nowrap;
+}
+.sx-file.sx-state-process .thumbnail .sx-result {
+    padding: 0;
 }
 
-.sx-state-process .sx-result {
+/*.sx-state-process .sx-result {
     background: url(../img/loaders/circulare-blue-24_24.GIF) no-repeat;
-}
+}*/
+/*.sx-state-process .file-preview {
+    background: url(../img/loaders/circulare-blue-24_24.GIF) no-repeat;
+}*/
 
-.file-preview img {
-    max-width: 150px;
-    max-height: 150px;
+.file-preview img, .file-preview video, .file-preview canvas  {
+    max-width: 100%;
+    max-height: 19rem;
+    margin: auto;
+}
+.file-preview a {
+    margin: auto;
 }
 
 .dropzone {
@@ -100,7 +144,7 @@
 }
 
 .sx-state-process {
-    opacity: 0.5;
+    opacity: 0.9;
 }
 
 .sx-file.sx-state-fail .thumbnail {
@@ -109,6 +153,86 @@
 
 .sx-state-fail,
 .sx-state-queue {
-    opacity: 0.3;
+    opacity: 0.5;
+}
+
+
+
+.sx-file-progress {
+    position: relative;
+}
+.sx-file-progress-bg {
+    /*background: #e6e9ed;*/
+    position: relative;
+    height: 1.4rem;
+    /*border-radius: 5px;*/
+    overflow: hidden;
+}
+
+.sx-file-progress-text {
+    display: block;
+    line-height: 1.4rem;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    padding: 0 0.5rem;
+}
+
+.sx-file-progress-bar {
+    overflow: hidden;
+    background: silver;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    -webkit-transition: width 1s linear;
+    -moz-transition: width 1s linear;
+    -ms-transition: width 1s linear;
+    transition: width 1s linear;
+}
+
+@-webkit-keyframes progress_bar {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -40px 0;
+  }
+}
+@-moz-keyframes progress_bar {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -40px 0;
+  }
+}
+@keyframes progress_bar {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -40px 0;
+  }
+}
+
+.sx-file-progress-bar:after {
+    -webkit-animation: progress_bar 0.8s linear infinite;
+    -moz-animation: progress_bar 0.8s linear infinite;
+    -ms-animation: progress_bar 0.8s linear infinite;
+    -o-animation: progress_bar 0.8s linear infinite;
+    animation: progress_bar 0.8s linear infinite;
+    background-image: -webkit-linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+    -webkit-background-size: 40px 40px;
+    background-size: 40px 40px;
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 

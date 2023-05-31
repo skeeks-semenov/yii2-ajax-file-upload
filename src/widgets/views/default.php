@@ -12,8 +12,7 @@ $widget = $this->context;
                 <?= $widget->renderItemTemplate(); ?>
             </div>
         </div>
-        <div class="sx-files col-sm-12">
-        </div>
+        
 
 
         <div class="col-sm-12 sx-tools">
@@ -35,6 +34,9 @@ $widget = $this->context;
             </div>
         </div>
 
+        <div class="sx-files col-sm-12">
+        </div>
+        
         <div style="display: none;">
             <?= $element ?>
         </div>
