@@ -10,6 +10,7 @@ namespace skeeks\yii2\ajaxfileupload\controllers;
 
 use Imagine\Image\Box;
 use skeeks\cms\helpers\StringHelper;
+use skeeks\cms\Skeeks;
 use skeeks\sx\helpers\ResponseHelper;
 use skeeks\yii2\vkDatabase\models\VkCity;
 use skeeks\imagine\Image;
@@ -56,9 +57,16 @@ class UploadController extends Controller
     public function actionUpload()
     {
         //sleep(5);
+        
         $rr = new ResponseHelper();
         try
         {
+
+            /*Skeeks::unlimited();*/
+            set_time_limit(0);
+            ini_set("memory_limit", "50G");
+
+
             $file = UploadedFile::getInstanceByName(\Yii::$app->request->post('formName'));
 
             $uid = uniqid(time(), true);
@@ -76,7 +84,13 @@ class UploadController extends Controller
             if ($file && \Yii::$app->request->post('formName'))
             {
                 $rootPath = $directory . $file->name;
-                if (!$file->saveAs($rootPath))
+
+                if ($file->hasError) {
+                    
+                    throw new Exception(\Yii::t('app', 'Ошибка: ' . $file->error));
+                }
+
+                if (!$file->saveAs($rootPath, false))
                 {
                     throw new Exception(\Yii::t('app', 'Could not upload the image to a local folder'));
                 }
@@ -200,6 +214,9 @@ class UploadController extends Controller
                 ];
             } else {
                 //Проверить max_upload_file_size
+
+                throw new Exception("Проверьте настройки php max_upload_file_size + post_max_size");
+
             }
 
             $size = filesize($rootPath);
