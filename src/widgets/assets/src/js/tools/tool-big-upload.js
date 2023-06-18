@@ -262,7 +262,7 @@ if (!XMLHttpRequest.prototype.sendAsBinary) {
                         // Если сервер не вернул HTTP статус 200, то выведем окно с сообщением сервера.
                         if (evt.target.status != 200) {
                             /*alert(evt.target.responseText);*/
-                            FileObject.set('error', evt.target.responseText);
+                            FileObject.set('error', "Ошибка сервера");
                             FileObject.set('state', 'fail').render();
                             //Грузить след.
                             self.upload();
