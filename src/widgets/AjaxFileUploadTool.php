@@ -60,9 +60,9 @@ abstract class AjaxFileUploadTool extends Widget
             throw new InvalidConfigException();
         }
 
-        if (!$this->upload_url) {
+        /*if (!$this->upload_url) {
             $this->upload_url = $this->ajaxFileUploadWidget->upload_url;
-        }
+        }*/
     }
     /**
      * @return string

@@ -66,6 +66,9 @@
             
             jQuery(this.JInput).on('fileuploadadd', function(e, data) {
 
+                console.log("fileuploadadd");
+                console.log(data.files);
+
                 var FileObject = new sx.classes.fileupload.File(self.Uploader);
 
                 $.each(data.files, function (index, file) {

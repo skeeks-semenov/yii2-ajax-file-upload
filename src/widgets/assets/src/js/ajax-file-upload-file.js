@@ -73,6 +73,26 @@
         /**
          * @returns {string}
          */
+        getId: function () {
+            return String(this.get('id'));
+        },
+
+        /**
+         * @returns {string}
+         */
+        getSize: function () {
+            return Number(this.get('size', 0));
+        },
+        /**
+         * @returns {string}
+         */
+        getMimeType: function () {
+            return String(this.get('mimetype', "undefined"));
+        },
+
+        /**
+         * @returns {string}
+         */
         getError: function () {
             return this.get('error');
         },
@@ -168,6 +188,13 @@
 
             if (this.getState() == 'process' || this.getState() == 'queue') {
                 this.JResult.empty().append(this.getStateText());
+
+                self.JFilePrev.empty().append(
+                    $('<span>').append(
+                        self.getExtension()
+                    )
+                );
+
                 /*this.Blocker.block();*/
             } else if (this.getState() == 'success') {
                 if (this.getType() == 'image') {

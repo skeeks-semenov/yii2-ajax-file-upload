@@ -113,7 +113,9 @@
     max-height: 19rem;
     margin: auto;
 }
-.file-preview a {
+.file-preview a,
+.file-preview span
+{
     margin: auto;
 }
 

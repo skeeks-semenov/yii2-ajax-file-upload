@@ -53,7 +53,11 @@ class AjaxFileUploadWidget extends InputWidget
     /**
      * @var AjaxFileUploadDefaultTool[]
      */
-    public $tools = [
+    public $tools = [];
+    /**
+     * @var AjaxFileUploadDefaultTool[]
+     */
+    public $defaultTools = [
 
         'default' =>
             [
@@ -106,6 +110,8 @@ class AjaxFileUploadWidget extends InputWidget
         $this->_initClientFiles();
 
         $tools = [];
+
+        $this->tools = ArrayHelper::merge($this->defaultTools, (array) $this->tools);
 
         foreach ($this->tools as $id => $config) {
             $config['id'] = $id;

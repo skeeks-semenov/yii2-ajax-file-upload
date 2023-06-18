@@ -22,10 +22,8 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "^2.0.13",
+        "yiisoft/yii2": "^2.0",
         "skeeks/yii2-sx": "^1.3",
-        "skeeks/yii2-imagine": "^2.0",
-        "2amigos/yii2-file-upload-widget": "^1.0.9",
         "yiisoft/yii2-httpclient": "^2.0"
     },
     "autoload": {
