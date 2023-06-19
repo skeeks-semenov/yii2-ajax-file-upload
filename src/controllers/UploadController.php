@@ -9,6 +9,7 @@
 namespace skeeks\yii2\ajaxfileupload\controllers;
 
 use Imagine\Image\Box;
+use skeeks\cms\helpers\RequestResponse;
 use skeeks\cms\helpers\StringHelper;
 use skeeks\cms\Skeeks;
 use skeeks\imagine\Image;
@@ -255,9 +256,9 @@ class UploadController extends Controller
      */
     public function actionBin()
     {
-        $rr = new ResponseHelper();
+        $rr = new RequestResponse();
         $data = [];
-        \Yii::$app->response->format = Response::FORMAT_JSON;
+        //\Yii::$app->response->format = Response::FORMAT_JSON;
         try {
             $directory = \Yii::getAlias($this->private_tmp_dir).DIRECTORY_SEPARATOR;
             if (!is_dir($directory)) {
