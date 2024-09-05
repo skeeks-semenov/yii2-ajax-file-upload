@@ -260,7 +260,9 @@ class UploadController extends Controller
         $data = [];
         //\Yii::$app->response->format = Response::FORMAT_JSON;
         try {
-            $directory = \Yii::getAlias($this->private_tmp_dir).DIRECTORY_SEPARATOR;
+            $id = \Yii::$app->request->getHeaders()->get("sxuploader-upload-id");
+            $dirId = StringHelper::strtolower($id);
+            $directory = \Yii::getAlias($this->private_tmp_dir).DIRECTORY_SEPARATOR.$dirId.DIRECTORY_SEPARATOR;
             if (!is_dir($directory)) {
                 FileHelper::createDirectory($directory);
             }
