@@ -155,6 +155,10 @@
                 this.Files.push(NewFile);
                 this.JFiles.append(NewFile.render());
 
+                _.each(this.Files, function(File) {
+                    self.JElement.val(File.getValue());
+                });
+
                 NewFile.onValue(function() {
                     if (triggerChange) {
                         self.run();
