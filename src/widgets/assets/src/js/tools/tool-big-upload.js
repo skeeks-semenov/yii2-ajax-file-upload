@@ -38,8 +38,8 @@ if (!XMLHttpRequest.prototype.sendAsBinary) {
         upload: function () {
             var self = this;
 
-            console.log("Начать загрузку Файлов");
-            console.log(this.Uploader.Files);
+            /*console.log("Начать загрузку Файлов");
+            console.log(this.Uploader.Files);*/
 
             $.each(this.Uploader.Files, function (index, FileObject) {
 
@@ -54,7 +54,6 @@ if (!XMLHttpRequest.prototype.sendAsBinary) {
                     self.uploadOneFile(FileObject, 0, true)
                     return false;
                 }
-
             });
         },
 

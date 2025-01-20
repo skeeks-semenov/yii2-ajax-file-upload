@@ -52,7 +52,8 @@
                 _.each(this.get('files'), function(filedata)
                 {
                     var File = new sx.classes.fileupload.File(self, filedata);
-                    self.appendFile(File);
+                    File.isUploaded = true;
+                    self.appendFile(File, false);
                 });
             }
 
@@ -117,17 +118,15 @@
          * @param File
          * @returns {sx.classes.fileupload.AjaxFileUpload}
          */
-        appendFile: function(NewFile)
+        appendFile: function(NewFile, triggerChange = true)
         {
             var self = this;
 
             this.trigger('addFile', {'file' : NewFile});
 
             if (!NewFile.getValue() && this.isProcess === false) {
-
                 this.isProcess = true;
                 this.trigger('startUpload');
-
             }
 
             if (this.isMultiple())
@@ -135,9 +134,8 @@
                 this.Files.push(NewFile);
                 this.JFiles.append(NewFile.render());
 
-                NewFile.onValue(function()
-                {
-                    self.change();
+                NewFile.onValue(function() {
+                    self.run();
                 });
 
                 return this;
@@ -145,26 +143,29 @@
             } else
             {
                 self.JElement.val('');
-                self.JElement.change();
 
-                _.each(this.Files, function(File)
-                {
-                    File.remove();
+                /*if (triggerChange) {
+                    self.JElement.change();
+                }*/
+
+                _.each(this.Files, function(File) {
+                    File.remove(false);
                 });
 
                 this.Files.push(NewFile);
                 this.JFiles.append(NewFile.render());
 
-                NewFile.onValue(function()
-                {
-                    self.change();
+                NewFile.onValue(function() {
+                    if (triggerChange) {
+                        self.run();
+                    }
                 });
 
                 return this;
             }
         },
 
-        change: function()
+        run: function()
         {
             var self = this;
 
@@ -188,10 +189,6 @@
                 });
             }
 
-            self.JElement.change();
-            this.trigger('change');
-
-
             var allUploaded = true;
 
             _.each(this.Files, function(File)
@@ -202,7 +199,9 @@
             });
 
             if (allUploaded === true) {
-                this.trigger('endUpload');
+                self.trigger('endUpload');
+                self.JElement.trigger("change");
+                self.trigger('change');
             }
 
             return this;
@@ -212,7 +211,7 @@
          * @param id
          * @returns {sx.classes.fileupload.AjaxFileUpload}
          */
-        removeFile: function(id)
+        removeFile: function(id, triggerChange = true)
         {
             var newFiles = [];
 
@@ -225,7 +224,11 @@
             });
 
             this.Files = newFiles;
-            this.change();
+
+            if (triggerChange) {
+                this.run();
+            }
+
             return this;
         }
     });

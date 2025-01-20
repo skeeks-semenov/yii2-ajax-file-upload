@@ -79,6 +79,7 @@ class AjaxFileUploadBigTool extends AjaxFileUploadTool
         $this->options['id'] = $this->id;
         $this->options['multiple'] = $this->ajaxFileUploadWidget->multiple;
         $this->options['accept'] = $this->ajaxFileUploadWidget->accept;
+        $this->options['class'] = "sx-ajax-upload";
 
         $this->clientOptions = ArrayHelper::merge($this->defaultClientOptions, $this->clientOptions);
 

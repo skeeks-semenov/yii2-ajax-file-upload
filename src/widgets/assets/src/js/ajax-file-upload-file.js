@@ -372,11 +372,11 @@
         /**
          * @returns {sx.classes.fileupload._File}
          */
-        remove: function () {
+        remove: function (triggerChange = true) {
             this.JWrapper.fadeOut('slow').remove();
             this.isRemoved = true;
 
-            this.Uploader.removeFile(this.get('id'));
+            this.Uploader.removeFile(this.get('id'), triggerChange);
             return this;
         },
 
