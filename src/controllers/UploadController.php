@@ -256,6 +256,8 @@ class UploadController extends Controller
      */
     public function actionBin()
     {
+        Skeeks::unlimited();
+
         $rr = new RequestResponse();
         $data = [];
         //\Yii::$app->response->format = Response::FORMAT_JSON;
