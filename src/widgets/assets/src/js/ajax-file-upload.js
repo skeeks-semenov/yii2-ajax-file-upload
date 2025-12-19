@@ -70,7 +70,10 @@
 
                     update: function( event, ui )
                     {
-                        self.change();
+                        /*self.change();*/
+                        /*self.JElement.trigger("change");
+                        self.trigger('change');*/
+                        self.run();
                     }
                     /*placeholder: "portlet-placeholder ui-corner-all"*/
                 });
