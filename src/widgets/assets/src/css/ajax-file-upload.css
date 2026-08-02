@@ -20,18 +20,19 @@
 
 .sx-file .sx-controlls .sx-remove{
     cursor: pointer;
-    text-shadow: 1px 0px 0px white;
+    color: var(--sx-file-color, #262626);
+    text-shadow: none;
 }
 
 .sx-file .file-preview {
     overflow: hidden;
-    background: white;
+    background: var(--sx-file-background, #fff);
 
     /*height: 14rem;
     font-size: 3rem;*/
     /* vertical-align: middle; */
     height: 100%;
-    color: #909090;
+    color: var(--sx-file-muted-color, #909090);
     display: flex;
     align-items: center;
     /* text-align: center; */
@@ -64,7 +65,7 @@
     /* box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.42); */
     overflow: hidden;
     margin-bottom: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--sx-file-border-color, #ddd);
 
     position: relative;
 }
@@ -83,7 +84,8 @@
 
 .sx-file .thumbnail .caption {
     /*padding: 0px 10px;*/
-    background: #ffffff;
+    color: var(--sx-file-color, #262626);
+    background: var(--sx-file-caption-background, #fff);
     position: absolute;
     width: 100%;
     bottom: 0px;
@@ -125,11 +127,11 @@
 
 .dropzone.in {
     font-size: larger;
-    background: rgba(192, 192, 192, 0.4);
+    background: var(--sx-file-drop-background, rgba(192, 192, 192, 0.4));
 }
 
 .dropzone.hover {
-    background: rgba(255, 203, 122, 0.44);
+    background: var(--sx-file-drop-hover-background, rgba(255, 203, 122, 0.44));
 }
 
 .dropzone.fade {
@@ -142,7 +144,7 @@
 }
 
 .sx-state-fail .sx-result {
-    color: red;
+    color: var(--sx-file-error-color, #bd4348);
 }
 
 .sx-state-process {
@@ -150,7 +152,7 @@
 }
 
 .sx-file.sx-state-fail .thumbnail {
-    border-color: red;
+    border-color: var(--sx-file-error-color, #bd4348);
 }
 
 .sx-state-fail,
@@ -164,7 +166,7 @@
     position: relative;
 }
 .sx-file-progress-bg {
-    /*background: #e6e9ed;*/
+    background: var(--sx-file-progress-background, #e6e9ed);
     position: relative;
     height: 1.4rem;
     /*border-radius: 5px;*/
@@ -182,7 +184,7 @@
 
 .sx-file-progress-bar {
     overflow: hidden;
-    background: silver;
+    background: var(--sx-file-progress-bar-background, silver);
     height: 100%;
     position: absolute;
     top: 0;
