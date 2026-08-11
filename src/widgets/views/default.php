@@ -42,7 +42,9 @@ $widget = $this->context;
         </div>
         <?
 
-        \yii\jui\Sortable::widget();
+        if ($widget->multiple) {
+            \skeeks\cms\backend\widgets\sortable\assets\BackendSortableAdapterAsset::register($this);
+        }
 
         \skeeks\yii2\ajaxfileupload\widgets\assets\AjaxFileUploadWidgetAsset::register($this);
         $js = \yii\helpers\Json::encode($widget->clientOptions);

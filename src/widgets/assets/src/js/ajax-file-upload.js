@@ -59,23 +59,17 @@
 
 
             if (this.isMultiple()) {
-                this.JFiles.sortable(
-                {
+                this.Sortable = sx.backend.sortable.create(this.JFiles, {
                     cursor: "move",
-                    //handle: ".sx-tree-move",
+                    itemSelector: "> .sx-file",
+                    cancel: "a, input, textarea, button, select, option",
                     forceHelperSize: true,
                     forcePlaceholderSize: true,
                     opacity: 0.5,
-                    grid: [ 2, 2 ],
-
-                    update: function( event, ui )
+                    onUpdate: function()
                     {
-                        /*self.change();*/
-                        /*self.JElement.trigger("change");
-                        self.trigger('change');*/
                         self.run();
                     }
-                    /*placeholder: "portlet-placeholder ui-corner-all"*/
                 });
             }
         },
