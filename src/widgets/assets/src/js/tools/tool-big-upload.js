@@ -88,8 +88,9 @@ if (!XMLHttpRequest.prototype.sendAsBinary) {
                     xhr.setRequestHeader("Sxuploader-File-Name", encodeURI(FileObject.getName()));
                     // Размер целого файла
                     xhr.setRequestHeader("Sxuploader-File-Size", FileObject.getSize());
+                    xhr.setRequestHeader("Sxuploader-File-Last-Modified", FileObject.get("fileinfo").lastModified || "");
                     // Размер порции
-                    xhr.setRequestHeader("Sxuploader-Portion-Size", portionSize);
+                    xhr.setRequestHeader("Sxuploader-Portion-Size", self.getPortionSize());
                     //Проверка
                     xhr.setRequestHeader("Sxuploader-Check-Resume", 1);
 
@@ -104,8 +105,17 @@ if (!XMLHttpRequest.prototype.sendAsBinary) {
                             return;
                         }
 
+                        var responseData;
+                        try {
+                            responseData = JSON.parse(evt.target.responseText);
+                        } catch (e) {
+                            FileObject.set('error', "Некорректный ответ сервера");
+                            FileObject.set('state', 'fail').render();
+                            self.upload();
+                            return;
+                        }
 
-                        var responseData = JSON.parse(evt.target.responseText);
+                        responseData.data = responseData.data || {};
 
                         if (responseData.success === true) {
                             //Файл уже загружен
@@ -200,6 +210,7 @@ if (!XMLHttpRequest.prototype.sendAsBinary) {
 
                     // Размер целого файла
                     xhr.setRequestHeader("Sxuploader-File-Size", FileObject.getSize());
+                    xhr.setRequestHeader("Sxuploader-File-Last-Modified", FileObject.get("fileinfo").lastModified || "");
                     // Размер порции
                     xhr.setRequestHeader("Sxuploader-Portion-Size", portionSize);
 
@@ -268,25 +279,36 @@ if (!XMLHttpRequest.prototype.sendAsBinary) {
                             return;
                         }
 
-                        // Добавим к текущей позиции размер порции.
-                        //that.position += that.options['portion'];
-                        var nextPosition = from + self.getPortionSize();
+                        var responseData;
+                        try {
+                            responseData = JSON.parse(evt.target.responseText);
+                        } catch (e) {
+                            FileObject.set('error', "Некорректный ответ сервера");
+                            FileObject.set('state', 'fail').render();
+                            self.upload();
+                            return;
+                        }
 
-                        // Закачаем следующую порцию, если файл еще не кончился.
-                        if (FileObject.getSize() > nextPosition) {
-                            self.uploadOneFile(FileObject, nextPosition);
+                        if (responseData.success !== true) {
+                            FileObject.set('error', responseData.message || "Ошибка загрузки файла");
+                            FileObject.set('state', 'fail').render();
+                            self.upload();
+                            return;
+                        }
+
+                        // The server-reported offset is authoritative. This keeps the
+                        // next request aligned even after a retry or a short write.
+                        if (responseData.data && responseData.data.rootPathSize < FileObject.getSize()) {
+                            self.uploadOneFile(FileObject, Number(responseData.data.rootPathSize));
                         } else {
-
-                            var responseData = JSON.parse(evt.target.responseText);
-
-                            if (responseData.success === true) {
+                            if (responseData.data && responseData.data.value) {
                                 FileObject.set('error', '');
                                 FileObject.set('state', 'success');
 
                                 FileObject.merge(responseData.data)
                                 FileObject.setValue(responseData.data.value);
                             } else {
-                                FileObject.set('error', responseData.message);
+                                FileObject.set('error', "Сервер не подтвердил завершение загрузки");
                                 FileObject.set('state', 'fail');
                             }
 

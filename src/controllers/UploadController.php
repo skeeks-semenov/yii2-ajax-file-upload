@@ -262,9 +262,28 @@ class UploadController extends Controller
         $data = [];
         //\Yii::$app->response->format = Response::FORMAT_JSON;
         try {
-            $id = \Yii::$app->request->getHeaders()->get("sxuploader-upload-id");
-            $dirId = StringHelper::strtolower($id);
-            $directory = \Yii::getAlias($this->private_tmp_dir).DIRECTORY_SEPARATOR.$dirId.DIRECTORY_SEPARATOR;
+            $headers = \Yii::$app->request->getHeaders();
+            $widgetId = (string)$headers->get("sxuploader-widget-id");
+            $fileName = rawurldecode((string)$headers->get("sxuploader-file-name"));
+            $fileName = basename(str_replace('\\', '/', $fileName));
+            $fileSize = (int)$headers->get("sxuploader-file-size");
+            $lastModified = (string)$headers->get("sxuploader-file-last-modified");
+
+            if (!$widgetId || !$fileName || $fileSize <= 0) {
+                throw new Exception(\Yii::t('app', 'Incorrect chunked upload parameters'));
+            }
+
+            // The key must remain stable when the user reloads the page and selects
+            // the same file again. A random client upload id prevents resuming and
+            // leaves a new *-loading file after every attempt.
+            $uploadKey = hash('sha256', implode("\0", [
+                \Yii::$app->session->id,
+                $widgetId,
+                $fileName,
+                $fileSize,
+                $lastModified,
+            ]));
+            $directory = \Yii::getAlias($this->private_tmp_dir).DIRECTORY_SEPARATOR.$uploadKey.DIRECTORY_SEPARATOR;
             if (!is_dir($directory)) {
                 FileHelper::createDirectory($directory);
             }
@@ -276,19 +295,20 @@ class UploadController extends Controller
             //Корректный запрос
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-                $from = (int)\Yii::$app->request->getHeaders()->get("sxuploader-portion-from");
-                $widgetId = (string)\Yii::$app->request->getHeaders()->get("sxuploader-widget-id");
-                $fileName = (string)rawurldecode(\Yii::$app->request->getHeaders()->get("sxuploader-file-name"));
-                $fileSize = (int)\Yii::$app->request->getHeaders()->get("sxuploader-file-size");
-                $isCheckRequest = (int)\Yii::$app->request->getHeaders()->get("sxuploader-check-resume");
-
-                $fileHash = md5(\Yii::$app->session->id.$widgetId.$fileSize);
-                $rootPath = $directory.$fileHash.$fileName."-loading";
+                $from = (int)$headers->get("sxuploader-portion-from");
+                $isCheckRequest = (int)$headers->get("sxuploader-check-resume");
+                $rootPath = $directory.$fileName."-loading";
 
                 //Проверка дозагрузки
                 if ($isCheckRequest == 1) {
                     $rr->success = true;
                     if (file_exists($rootPath)) {
+                        clearstatcache(true, $rootPath);
+                        if (filesize($rootPath) > $fileSize) {
+                            unlink($rootPath);
+                            return $rr;
+                        }
+
                         //Файл в процессе
                         $rr->data = [
                             'is_loading'     => 1,
@@ -301,8 +321,6 @@ class UploadController extends Controller
                     } else {
                         //файл мог быть уже загружен полностью
                         $newRootPath = substr($rootPath, 0, strlen($rootPath) - 8);
-                        //Убрать хэш из названия файла
-                        $newRootPath = str_replace($fileHash, "", $newRootPath);
                         $rootPath = $newRootPath;
 
                         if (file_exists($rootPath)) {
@@ -317,18 +335,32 @@ class UploadController extends Controller
                     if ($from == 0) {
                         $fout = fopen($rootPath, "wb");
                     } else {
+                        clearstatcache(true, $rootPath);
+                        $serverSize = file_exists($rootPath) ? filesize($rootPath) : 0;
+                        if ($serverSize !== $from) {
+                            throw new Exception(\Yii::t('app', 'Upload offset mismatch: expected {expected}, received {received}', [
+                                'expected' => $serverSize,
+                                'received' => $from,
+                            ]));
+                        }
                         $fout = fopen($rootPath, "ab");
                     }
 
                     if (!$fout) {
-                        throw new Exception(\Yii::t('app', "Can't open file for writing: ").$filename);
+                        throw new Exception(\Yii::t('app', "Can't open file for writing: ").$fileName);
                     }
 
 
-                    if (\Yii::$app->request->rawBody) {
-                        fwrite($fout, \Yii::$app->request->rawBody);
-                        fclose($fout);
+                    $rawBody = \Yii::$app->request->rawBody;
+                    if ($rawBody !== '') {
+                        $written = fwrite($fout, $rawBody);
+                        if ($written !== strlen($rawBody)) {
+                            fclose($fout);
+                            throw new Exception(\Yii::t('app', 'Could not write the complete file chunk'));
+                        }
                     }
+                    fclose($fout);
+                    clearstatcache(true, $rootPath);
 
 
                     //Файл загружен полностью
@@ -336,12 +368,14 @@ class UploadController extends Controller
                         $rr->success = true;
 
                         $newRootPath = substr($rootPath, 0, strlen($rootPath) - 8);
-                        //Убрать хэш из названия файла
-                        $newRootPath = str_replace($fileHash, "", $newRootPath);
 
-                        rename($rootPath, $newRootPath);
+                        if (!rename($rootPath, $newRootPath)) {
+                            throw new Exception(\Yii::t('app', 'Could not finalize the uploaded file'));
+                        }
                         $rootPath = $newRootPath;
 
+                    } elseif (filesize($rootPath) > $fileSize) {
+                        throw new Exception(\Yii::t('app', 'Uploaded data exceeds the declared file size'));
                     } else {
                         //Это была загрузка лишь одной порции
                         $rr->success = true;

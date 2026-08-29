@@ -200,6 +200,7 @@
             });
 
             if (allUploaded === true) {
+                self.isProcess = false;
                 self.trigger('endUpload');
                 self.JElement.trigger("change");
                 self.trigger('change');
