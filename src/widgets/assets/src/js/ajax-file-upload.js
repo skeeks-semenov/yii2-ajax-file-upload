@@ -62,7 +62,8 @@
                 this.Sortable = sx.backend.sortable.create(this.JFiles, {
                     cursor: "move",
                     itemSelector: "> .sx-file",
-                    cancel: "a, input, textarea, button, select, option",
+                    // Preview links are drag surfaces; only file actions and form controls cancel sorting.
+                    cancel: ".sx-controlls, input, textarea, button, select, option",
                     forceHelperSize: true,
                     forcePlaceholderSize: true,
                     opacity: 0.5,
